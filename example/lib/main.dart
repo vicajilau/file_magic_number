@@ -1,4 +1,5 @@
 import 'package:file_magic_number/file_magic_number.dart';
+import 'package:file_magic_number/magic_number_type.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -31,13 +32,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String? _typeFile;
+  MagicNumberType? _typeFile;
 
   void _loadFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      String? typeFile = await MagicNumber.detectFileType(
+      MagicNumberType? typeFile = await MagicNumber.detectFileType(
         result.files.single.path!,
       );
       setState(() {
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const Text('The loaded file is of type:'),
             Text(
-              _typeFile ?? "FILE NOT LOADED",
+              _typeFile?.name ?? "FILE NOT LOADED",
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],

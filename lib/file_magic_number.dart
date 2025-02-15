@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:file_magic_number/magic_number_type.dart';
 import 'package:file_magic_number/stream_extension.dart';
 
 /// A utility class for detecting file types based on their magic numbers.
@@ -18,14 +19,14 @@ import 'package:file_magic_number/stream_extension.dart';
 /// - EXE (`0x4D 0x5A`)
 class MagicNumber {
   /// A map of known magic number signatures associated with file types.
-  static const Map<List<int>, String> _magicNumbers = {
-    [0x50, 0x4B, 0x03, 0x04]: 'zip',
-    [0x25, 0x50, 0x44, 0x46]: 'pdf',
-    [0x89, 0x50, 0x4E, 0x47]: 'png',
-    [0xFF, 0xD8, 0xFF]: 'jpg',
-    [0x7F, 0x45, 0x4C, 0x46]: 'elf',
-    [0x42, 0x4D]: 'bmp',
-    [0x4D, 0x5A]: 'exe',
+  static const Map<List<int>, MagicNumberType> _magicNumbers = {
+    [0x50, 0x4B, 0x03, 0x04]: MagicNumberType.zip,
+    [0x25, 0x50, 0x44, 0x46]: MagicNumberType.pdf,
+    [0x89, 0x50, 0x4E, 0x47]: MagicNumberType.png,
+    [0xFF, 0xD8, 0xFF]: MagicNumberType.jpg,
+    [0x7F, 0x45, 0x4C, 0x46]: MagicNumberType.elf,
+    [0x42, 0x4D]: MagicNumberType.bmp,
+    [0x4D, 0x5A]: MagicNumberType.exe,
   };
 
   /// Detects the file type by reading its magic number.
@@ -33,24 +34,24 @@ class MagicNumber {
   /// This method reads the first 16 bytes of the given file and checks if
   /// they match any known magic number signatures.
   ///
-  /// - Returns the file type as a `String`, or `null` if the type is unknown or the file is empty.
-  ///
-  /// - Throws a `FileSystemException` if the file does not exist or cannot be read.
+  /// - Returns the file type as a `MagicNumberType`, or `MagicNumberType.unknown` if the type is unknown.
+  /// - Returns `MagicNumberType.fileNotExist` if the file does not exist or cannot be read.
+  /// - Returns `MagicNumberType.emptyFile` if the file is empty.
   ///
   /// Example usage:
   /// ```dart
-  /// String? fileType = await MagicNumber.detectFileType('path/to/file');
-  /// print(fileType); // Output: 'png', 'pdf', etc.
+  /// MagicNumberType fileType = await MagicNumber.detectFileType('path/to/file');
+  /// print(fileType); // Output: MagicNumberType.png, MagicNumberType.pdf, etc.
   /// ```
-  static Future<String?> detectFileType(String filePath) async {
+  static Future<MagicNumberType> detectFileType(String filePath) async {
     final file = File(filePath);
-    if (!(await file.exists())) return null;
+    if (!(await file.exists())) return MagicNumberType.fileNotExist;
 
     final Stream<List<int>> stream = file.openRead(0, 16);
     final List<int>? byteList = await stream.firstOrNull();
 
     if (byteList == null || byteList.isEmpty) {
-      return null; // Prevents "Bad state: No element" error
+      return MagicNumberType.emptyFile;
     }
 
     final Uint8List bytes = Uint8List.fromList(byteList);
@@ -60,7 +61,7 @@ class MagicNumber {
         return entry.value;
       }
     }
-    return null;
+    return MagicNumberType.unknown;
   }
 
   /// Checks if the given byte sequence matches a known magic number signature.
