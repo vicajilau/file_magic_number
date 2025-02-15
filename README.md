@@ -1,4 +1,4 @@
-# file_magic_number
+# File Magic Number
 
 A Dart package to detect file types based on their magic number instead of relying on MIME types. Works on Flutter for mobile, desktop, and web without requiring native code.
 
