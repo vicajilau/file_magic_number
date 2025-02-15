@@ -1,3 +1,10 @@
+## 0.3.0
+### General
+* Refactored structure.
+### Web
+* Added web development.
+
+
 ## 0.2.0
 ### General
 * Example improvements.
