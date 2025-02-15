@@ -54,15 +54,15 @@ void pickFile() {
 ```
 
 ## 🎯 Supported File Types
-| File Type | Magic Number (Hex) |
-|-----------|--------------------|
-| ZIP       | 50 4B 03 04        |
-| PDF       | 25 50 44 46        |
+| File Type | Magic Number (Hex)      |
+|-----------|-------------------------|
+| ZIP       | 50 4B 03 04             |
+| PDF       | 25 50 44 46             |
 | PNG       | 89 50 4E 47 0D 0A 1A 0A |
-| JPG       | FF D8 FF           |
-| ELF       | 7F 45 4C 46        |
-| BMP       | 42 4D              |
-| EXE       | 4D 5A              |
+| JPG       | FF D8 FF                |
+| ELF       | 7F 45 4C 46             |
+| BMP       | 42 4D                   |
+| EXE       | 4D 5A                   |
 
 ## 📌 Contributing
 Feel free to contribute by adding more file signatures or improving the implementation. Fork the repo and submit a PR!
