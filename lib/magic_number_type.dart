@@ -1,1 +1,1 @@
-enum MagicNumberType { unknown, fileNotExist, emptyFile, zip, pdf, png, jpg, elf, bmp, exe }
+enum MagicNumberType { unknown, emptyFile, zip, pdf, png, jpg, elf, bmp, exe }

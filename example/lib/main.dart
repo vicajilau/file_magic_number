@@ -38,11 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      MagicNumberType? typeFile = await MagicNumber.detectFileType(
-        result.files.single.path!,
-      );
       setState(() {
-        _typeFile = typeFile;
+        _typeFile = MagicNumber.detectFileType(result.files.single.bytes);
       });
     }
   }
