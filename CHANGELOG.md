@@ -1,3 +1,7 @@
+## 0.3.1
+### General
+* Some minor improvements.
+
 ## 0.3.0
 ### General
 * Refactored structure.
