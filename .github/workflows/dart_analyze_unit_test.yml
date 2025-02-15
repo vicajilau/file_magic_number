@@ -1,0 +1,30 @@
+name: Dart Analyze + Unit Test
+
+on: push
+
+jobs:
+  analyze-unit-test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        sdk: [stable]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter SDK
+        uses: flutter-actions/setup-flutter@v4
+
+      - name: Print Dart SDK version
+        run: dart --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze code
+        run: dart analyze
+
+      - name: Run Unit tests
+        run: flutter test
