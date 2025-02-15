@@ -30,8 +30,8 @@ dart pub get
 import 'package:file_magic_number/file_magic_number.dart';
 
 void main() async {
-  String? fileType = await MagicNumber.detectFileType('/path/to/file');
-  print(fileType ?? 'Unknown file type');
+  MagicNumberType fileType = await MagicNumber.detectFileType('/path/to/file');
+  print(fileType);
 }
 ```
 
@@ -46,8 +46,8 @@ void pickFile() {
   input.onChange.listen((_) async {
     final file = input.files?.first;
     if (file != null) {
-      String? fileType = await MagicNumber.detectFileType(file);
-      print(fileType ?? 'Unknown file type');
+      MagicNumberType fileType = await MagicNumber.detectFileType(file);
+      print(fileType);
     }
   });
 }
@@ -69,4 +69,3 @@ Feel free to contribute by adding more file signatures or improving the implemen
 
 ## 📜 License
 This project is licensed under the MIT License.
-
