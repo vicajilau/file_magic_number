@@ -1,5 +1,6 @@
 # File Magic Number
-
+[![pub package](https://img.shields.io/pub/v/http.svg)](https://pub.dev/packages/file_magic_number))
+![CI Status](https://github.com/vicajilau/file_magic_number/actions/workflows/dart_analyze_unit_test.yml/badge.svg)
 A Dart package to detect file types based on their magic number instead of relying on MIME types. Works on Flutter for mobile, desktop, and web without requiring native code.
 
 ## 🚀 Features
