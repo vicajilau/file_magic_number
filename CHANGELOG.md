@@ -1,6 +1,7 @@
 ## 0.3.0
 ### General
 * Refactored structure.
+* **BREAKING CHANGE:** `detectFileType` use a `Uint8List` instead of a `String` as parameter doing it universal.
 ### Web
 * Added web development.
 
