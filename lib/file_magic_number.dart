@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:file_magic_number/stream_extension.dart';
+
 /// A utility class for detecting file types based on their magic numbers.
 ///
 /// Magic numbers are specific byte sequences at the beginning of a file
@@ -73,22 +75,5 @@ class MagicNumber {
       if (bytes[i] != signature[i]) return false;
     }
     return true;
-  }
-}
-
-/// Extension for safely retrieving the first element from a `Stream<T>`.
-///
-/// This prevents errors when calling `.first` on an empty stream.
-extension StreamUtils<T> on Stream<T> {
-  /// Returns the first element of the stream, or `null` if the stream is empty.
-  ///
-  /// This is useful for avoiding `Bad state: No element` errors when
-  /// reading files with `Stream<List<int>>`.
-  Future<T?> firstOrNull() async {
-    try {
-      return await first;
-    } catch (_) {
-      return null; // Returns null instead of throwing an exception
-    }
   }
 }
