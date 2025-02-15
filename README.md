@@ -1,39 +1,70 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# file_magic_number
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+A Dart package to detect file types based on their magic number instead of relying on MIME types. Works on Flutter for mobile, desktop, and web without requiring native code.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## 🚀 Features
+- Detects file types using their magic number (signature bytes)
+- Supports Flutter on Android, iOS, macOS, Windows, Linux, and Web
+- No need for native plugins
+- Lightweight and easy to extend with custom signatures
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## 📌 Installation
+Add the dependency to your `pubspec.yaml`:
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  file_magic_number: latest_version
 ```
 
-## Additional information
+Then, run:
+```sh
+dart pub get
+```
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## 🛠️ Usage
+
+### Detect a file type from a local file (mobile & desktop)
+```dart
+import 'package:file_magic_number/file_magic_number.dart';
+
+void main() async {
+  String? fileType = await MagicNumber.detectFileType('/path/to/file');
+  print(fileType ?? 'Unknown file type');
+}
+```
+
+### Detect a file type in Flutter Web
+```dart
+import 'dart:html' as html;
+import 'package:file_magic_number/file_magic_number.dart';
+
+void pickFile() {
+  final input = html.FileUploadInputElement()..accept = '*/*';
+  input.click();
+  input.onChange.listen((_) async {
+    final file = input.files?.first;
+    if (file != null) {
+      String? fileType = await MagicNumber.detectFileType(file);
+      print(fileType ?? 'Unknown file type');
+    }
+  });
+}
+```
+
+## 🎯 Supported File Types
+| File Type | Magic Number (Hex) |
+|-----------|--------------------|
+| ZIP       | 50 4B 03 04        |
+| PDF       | 25 50 44 46        |
+| PNG       | 89 50 4E 47 0D 0A 1A 0A |
+| JPG       | FF D8 FF           |
+| ELF       | 7F 45 4C 46        |
+| BMP       | 42 4D              |
+| EXE       | 4D 5A              |
+
+## 📌 Contributing
+Feel free to contribute by adding more file signatures or improving the implementation. Fork the repo and submit a PR!
+
+## 📜 License
+This project is licensed under the MIT License.
+
