@@ -25,31 +25,14 @@ dart pub get
 
 ## 🛠️ Usage
 
-### Detect a file type from a local file (mobile & desktop)
+### Detect a file type from bytes
 ```dart
 import 'package:file_magic_number/file_magic_number.dart';
 
 void main() async {
-  MagicNumberType fileType = await MagicNumber.detectFileType('/path/to/file');
+  final bytes = Uint8List.fromList([0x25, 0x50, 0x44, 0x46]);
+  final fileType = MagicNumber.detectFileType(bytes);
   print(fileType);
-}
-```
-
-### Detect a file type in Flutter Web
-```dart
-import 'dart:html' as html;
-import 'package:file_magic_number/file_magic_number.dart';
-
-void pickFile() {
-  final input = html.FileUploadInputElement()..accept = '*/*';
-  input.click();
-  input.onChange.listen((_) async {
-    final file = input.files?.first;
-    if (file != null) {
-      MagicNumberType fileType = await MagicNumber.detectFileType(file);
-      print(fileType);
-    }
-  });
 }
 ```
 
