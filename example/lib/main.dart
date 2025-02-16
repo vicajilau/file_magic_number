@@ -1,3 +1,4 @@
+import 'package:example/uint8list_extension.dart';
 import 'package:file_magic_number/file_magic_number.dart';
 import 'package:file_magic_number/magic_number_type.dart';
 import 'package:file_picker/file_picker.dart';
@@ -36,10 +37,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _loadFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
-
     if (result != null) {
+      final bytes = result.files.single.bytes;
+      bytes?.printInDebug();
       setState(() {
-        _typeFile = MagicNumber.detectFileType(result.files.single.bytes);
+        _typeFile = MagicNumber.detectFileType(bytes);
       });
     }
   }

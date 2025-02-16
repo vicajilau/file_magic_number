@@ -1,3 +1,7 @@
+## 0.7.0
+* Added debug utilities.
+* Very large files are shortened to the first few bytes to speed up the library. This means up to +10x faster on large files.
+
 ## 0.6.0
 * Added much more formats.
 * Improved documentation.
