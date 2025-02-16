@@ -1,5 +1,4 @@
 ## 0.5.0
-### General
 * Added coverage in CI
 * Added more test
 * Improved readme
