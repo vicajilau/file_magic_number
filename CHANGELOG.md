@@ -1,3 +1,6 @@
+## 0.5.1
+* Fixed image on pub.dev
+
 ## 0.5.0
 * Added coverage in CI
 * Added more test
