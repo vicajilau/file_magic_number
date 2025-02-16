@@ -1,8 +1,20 @@
-[![File Magic Number](https://github.com/vicajilau/file_magic_number/blob/main/.github/assets/file_magic_number.png)](https://pub.dev/packages/file_magic_number)
-# File Magic Number
-[![pub package](https://img.shields.io/pub/v/http.svg)](https://pub.dev/packages/file_magic_number)
-![CI Status](https://github.com/vicajilau/file_magic_number/actions/workflows/dart_analyze_unit_test.yml/badge.svg)
-[![codecov](https://codecov.io/gh/vicajilau/file_magic_number/graph/badge.svg?token=LS2Q5TKXKG)](https://codecov.io/gh/vicajilau/file_magic_number)
+<p align="center">
+  <a href="https://pub.dev/packages/file_magic_number">
+    <img src="https://github.com/vicajilau/file_magic_number/blob/main/.github/assets/file_magic_number.png" width="200" alt="File Magic Number Logo" />
+  </a>
+
+  <h1 align="center">File Magic Number</h1>
+
+  <a href="https://pub.dev/packages/file_magic_number">
+    <img src="https://img.shields.io/pub/v/http.svg" alt="Pub Package Version" />
+  </a>
+  <br />
+  <img src="https://github.com/vicajilau/file_magic_number/actions/workflows/dart_analyze_unit_test.yml/badge.svg" alt="CI Status Badge" />
+  <br />
+  <a href="https://codecov.io/gh/vicajilau/file_magic_number">
+    <img src="https://codecov.io/gh/vicajilau/file_magic_number/graph/badge.svg?token=LS2Q5TKXKG" alt="Code Coverage Badge" />
+  </a>
+</p>
 
 A Flutter package to detect file types based on their magic number instead of relying on MIME types. Works on Flutter for mobile, desktop, and web without requiring native code.
 
