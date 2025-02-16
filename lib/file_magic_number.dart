@@ -38,6 +38,11 @@ class MagicNumber {
     [0x53, 0x51, 0x4C, 0x69, 0x74, 0x65]: MagicNumberType.sqlite,
   };
 
+  /// The length of the longest known magic number signature.
+  static final int _maxSignatureLength = _magicNumbers.keys
+      .map((e) => e.length)
+      .reduce((a, b) => a > b ? a : b);
+
   /// Detects the file type from a byte array using its magic number.
   ///
   /// - [bytes]: The byte data of the file.
@@ -55,8 +60,14 @@ class MagicNumber {
       return MagicNumberType.emptyFile;
     }
 
+    // Only check the first `_maxSignatureLength` bytes to avoid unnecessary processing.
+    final Uint8List limitedBytes =
+        bytes.length > _maxSignatureLength
+            ? bytes.sublist(0, _maxSignatureLength)
+            : bytes;
+
     for (var entry in _magicNumbers.entries) {
-      if (_matches(bytes, entry.key)) {
+      if (_matches(limitedBytes, entry.key)) {
         return entry.value;
       }
     }
