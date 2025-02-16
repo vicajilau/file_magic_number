@@ -133,7 +133,7 @@ void main() {
       expect(result, MagicNumberType.emptyFile);
     });
 
-    test('Limits byte check to _maxSignatureLength', () {
+    test('Detects MP4 file when bytes.length > _maxSignatureLength', () {
       final bytes = Uint8List.fromList(
         [0x66, 0x74, 0x79, 0x70] + List.filled(16, 0x00),
       );
