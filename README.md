@@ -8,9 +8,7 @@
   <a href="https://pub.dev/packages/file_magic_number">
     <img src="https://img.shields.io/pub/v/http.svg" alt="Pub Package Version" />
   </a>
-  <br />
   <img src="https://github.com/vicajilau/file_magic_number/actions/workflows/dart_analyze_unit_test.yml/badge.svg" alt="CI Status Badge" />
-  <br />
   <a href="https://codecov.io/gh/vicajilau/file_magic_number">
     <img src="https://codecov.io/gh/vicajilau/file_magic_number/graph/badge.svg?token=LS2Q5TKXKG" alt="Code Coverage Badge" />
   </a>
