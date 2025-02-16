@@ -26,9 +26,6 @@ jobs:
       - name: Analyze code
         run: dart analyze
 
-      - name: Run Unit tests
-        run: flutter test
-
       - name: Activate coverage tool
         run: dart pub global activate coverage
 

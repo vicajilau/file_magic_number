@@ -1,3 +1,10 @@
+## 0.5.0
+### General
+* Added coverage in CI
+* Added more test
+* Improved readme
+* Created as Dart package
+
 ## 0.4.0
 ### General
 * Update dependencies on example project.

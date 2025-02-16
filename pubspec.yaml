@@ -1,20 +1,15 @@
 name: file_magic_number
 description: "A Flutter package to detect file types based on their magic number instead of MIME types. Supports Flutter on mobile, desktop, and web without native code."
-version: 0.4.0
+version: 0.5.0
 homepage: https://github.com/vicajilau/file_magic_number
 
 environment:
   sdk: ^3.7.0
-  flutter: ">=1.17.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
   web: ^1.1.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_lints: ^5.0.0
   test: ^1.25.15
 

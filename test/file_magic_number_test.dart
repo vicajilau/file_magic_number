@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:file_magic_number/file_magic_number.dart';
 import 'package:file_magic_number/magic_number_type.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('MagicNumber', () {
