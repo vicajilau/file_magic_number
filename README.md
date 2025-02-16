@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://pub.dev/packages/file_magic_number">
-    <img src="https://github.com/vicajilau/file_magic_number/blob/main/.github/assets/file_magic_number.png" height="200">
+    <img src="https://github.com/vicajilau/file_magic_number/blob/main/.github/assets/file_magic_number.png" height="400">
   </a>
 </p>
 
