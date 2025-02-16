@@ -26,11 +26,14 @@ jobs:
       - name: Analyze code
         run: dart analyze
 
+      - name: Run Unit tests
+        run: flutter test
+
       - name: Activate coverage tool
         run: dart pub global activate coverage
 
-      - name: Run Unit tests
-        run: flutter test
+      - name: Run tests
+        run: dart pub global run coverage:test_with_coverage
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
