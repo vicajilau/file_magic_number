@@ -18,7 +18,7 @@
 </p>
 
 
-A Dart package to detect file types based on their magic number instead of relying on MIME types. Works on Flutter for mobile, desktop, and web without requiring native code.
+A Dart & Flutter package to detect file types based on their magic number instead of relying on MIME types. Works on Flutter for mobile, desktop, and web without requiring native code.
 
 ## 🚀 Features
 - Detects file types using their magic number (signature bytes)
@@ -34,7 +34,12 @@ dependencies:
   file_magic_number: latest_version
 ```
 
-Then, run:
+Then for Dart, run:
+```sh
+dart pub get
+```
+
+Or for Flutter, run:
 ```sh
 flutter pub get
 ```
