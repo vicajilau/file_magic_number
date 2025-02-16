@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
       final bytes = result.files.single.bytes;
-      bytes?.printInDebug();
+      bytes?.printInDebug(fileName: result.files.single.name);
       setState(() {
         _typeFile = MagicNumber.detectFileType(bytes);
       });
