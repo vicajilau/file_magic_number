@@ -34,3 +34,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: vicajilau/file_magic_number
+          fail_ci_if_error: true
+          verbose: true
