@@ -1,3 +1,7 @@
+## 0.4.0
+### General
+* Update dependencies on example project.
+
 ## 0.3.1
 ### General
 * Some minor improvements.
