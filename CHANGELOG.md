@@ -1,3 +1,9 @@
+## 0.6.0
+* Added much more formats.
+* Improved documentation.
+* Simplified verification.
+* Added tests for each format.
+
 ## 0.5.1
 * Fixed image on pub.dev
 
