@@ -1,3 +1,5 @@
+import 'package:file_magic_number/magic_number_match_type.dart';
+
 /// Enum representing different file types based on their magic numbers.
 ///
 /// Magic numbers are unique byte sequences at the beginning of a file
@@ -63,5 +65,21 @@ enum MagicNumberType {
   tar,
 
   /// SQLite database file format.
-  sqlite,
+  sqlite;
+
+  /// Determines how the magic number should be matched for this file type.
+  ///
+  /// By default, file types are matched exactly at the beginning of the file (`exact`).
+  /// However, some formats (such as MP4) allow their magic number to appear at an
+  /// offset, so they are matched differently (`offset`).
+  ///
+  /// This method is used internally by the library during file type detection.
+  MagicNumberMatchType get matchType {
+    switch (this) {
+      case MagicNumberType.mp4:
+        return MagicNumberMatchType.offset;
+      default:
+        return MagicNumberMatchType.exact;
+    }
+  }
 }

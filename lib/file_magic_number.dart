@@ -2,6 +2,8 @@ import 'dart:typed_data';
 
 import 'package:file_magic_number/magic_number_type.dart';
 
+import 'magic_number_match_type.dart';
+
 /// A utility class for detecting file types based on their magic numbers.
 ///
 /// Magic numbers are specific byte sequences at the beginning of a file
@@ -11,9 +13,7 @@ class MagicNumber {
   static const Map<List<int>, MagicNumberType> _magicNumbers = {
     // Compressed files
     [0x50, 0x4B, 0x03, 0x04]: MagicNumberType.zip,
-    // RAR v1.5 - v2.0
     [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00]: MagicNumberType.rar,
-    // RAR v5 or higher
     [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07]: MagicNumberType.rar,
     [0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C]: MagicNumberType.sevenZ,
 
@@ -21,8 +21,8 @@ class MagicNumber {
     [0x89, 0x50, 0x4E, 0x47]: MagicNumberType.png,
     [0xFF, 0xD8, 0xFF]: MagicNumberType.jpg,
     [0x47, 0x49, 0x46, 0x38]: MagicNumberType.gif,
-    [0x49, 0x49, 0x2A, 0x00]: MagicNumberType.tiff, // Little-endian
-    [0x4D, 0x4D, 0x00, 0x2A]: MagicNumberType.tiff, // Big-endian
+    [0x49, 0x49, 0x2A, 0x00]: MagicNumberType.tiff,
+    [0x4D, 0x4D, 0x00, 0x2A]: MagicNumberType.tiff,
     [0x42, 0x4D]: MagicNumberType.bmp,
 
     // Audio & Video
@@ -38,10 +38,10 @@ class MagicNumber {
     [0x53, 0x51, 0x4C, 0x69, 0x74, 0x65]: MagicNumberType.sqlite,
   };
 
-  /// The length of the longest known magic number signature.
-  static final int _maxSignatureLength = _magicNumbers.keys
-      .map((e) => e.length)
-      .reduce((a, b) => a > b ? a : b);
+  /// The length of the longest known magic number signature, doubled.
+  static final int _maxSignatureLength =
+      _magicNumbers.keys.map((e) => e.length).reduce((a, b) => a > b ? a : b) *
+      2;
 
   /// Detects the file type from a byte array using its magic number.
   ///
@@ -67,19 +67,38 @@ class MagicNumber {
             : bytes;
 
     for (var entry in _magicNumbers.entries) {
-      if (_matches(limitedBytes, entry.key)) {
-        return entry.value;
+      if (entry.value.matchType == MagicNumberMatchType.exact) {
+        if (_matchesExact(limitedBytes, entry.key)) {
+          return entry.value;
+        }
+      } else {
+        if (_matchesWithOffset(limitedBytes, entry.key)) {
+          return entry.value;
+        }
       }
     }
     return MagicNumberType.unknown;
   }
 
-  /// Checks if the given byte sequence matches a known magic number signature.
-  static bool _matches(Uint8List bytes, List<int> signature) {
+  /// Checks if the given byte sequence matches a known magic number signature exactly.
+  static bool _matchesExact(Uint8List bytes, List<int> signature) {
     if (bytes.length < signature.length) return false;
     for (int i = 0; i < signature.length; i++) {
       if (bytes[i] != signature[i]) return false;
     }
     return true;
+  }
+
+  /// Checks if the given byte sequence contains the magic number signature at any offset.
+  static bool _matchesWithOffset(Uint8List bytes, List<int> signature) {
+    if (bytes.length < signature.length) return false;
+    for (int i = 0; i <= bytes.length - signature.length; i++) {
+      if (signature.asMap().entries.every(
+        (entry) => bytes[i + entry.key] == entry.value,
+      )) {
+        return true;
+      }
+    }
+    return false;
   }
 }

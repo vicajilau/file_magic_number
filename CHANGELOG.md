@@ -1,5 +1,7 @@
 ## 0.7.0
 * Fixed bytes in example project
+* Created offset and regular file type detection
+* Added `MagicNumberMatchType` for offset and exact detection
 
 ## 0.6.0
 * Added much more formats.
