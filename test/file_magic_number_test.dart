@@ -13,7 +13,15 @@ void main() {
     });
 
     test('Detects RAR v1.5 - v2.0 file', () {
-      final bytes = Uint8List.fromList([0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00]);
+      final bytes = Uint8List.fromList([
+        0x52,
+        0x61,
+        0x72,
+        0x21,
+        0x1A,
+        0x07,
+        0x00,
+      ]);
       final result = MagicNumber.detectFileType(bytes);
       expect(result, MagicNumberType.rar);
     });
@@ -123,6 +131,14 @@ void main() {
     test('Returns emptyFile for null input', () {
       final result = MagicNumber.detectFileType(null);
       expect(result, MagicNumberType.emptyFile);
+    });
+
+    test('Limits byte check to _maxSignatureLength', () {
+      final bytes = Uint8List.fromList(
+        [0x66, 0x74, 0x79, 0x70] + List.filled(16, 0x00),
+      );
+      final result = MagicNumber.detectFileType(bytes);
+      expect(result, MagicNumberType.mp4);
     });
   });
 }
