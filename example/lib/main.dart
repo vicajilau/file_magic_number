@@ -36,7 +36,9 @@ class _MyHomePageState extends State<MyHomePage> {
   MagicNumberType? _typeFile;
 
   void _loadFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      withData: true,
+    );
     if (result != null) {
       final bytes = result.files.single.bytes;
       bytes?.printInDebug(fileName: result.files.single.name);

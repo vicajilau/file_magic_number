@@ -1,3 +1,6 @@
+## 0.7.0
+* Fixed bytes in example project
+
 ## 0.6.0
 * Added much more formats.
 * Improved documentation.
