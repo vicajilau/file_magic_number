@@ -1,3 +1,7 @@
+## 0.7.2
+* Improved `MagicNumberMatchType` for offset and exact detection.
+* Clearer documentation improvements.
+
 ## 0.7.1
 * Fixed documentation with `file_picker`dependency.
 
