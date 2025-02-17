@@ -66,7 +66,7 @@ import 'package:file_magic_number/file_magic_number.dart';
 import 'package:file_picker/file_picker.dart';
 
 void main() async {
-  FilePickerResult? result = await FilePicker.platform.pickFiles();
+  FilePickerResult? result = await FilePicker.platform.pickFiles(withData: true);
 
   if (result != null) {
     final fileType = MagicNumber.detectFileType(result.files.single.bytes);

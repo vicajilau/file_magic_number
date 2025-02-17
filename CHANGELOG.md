@@ -1,3 +1,6 @@
+## 0.7.1
+* Fixed documentation with `file_picker`dependency.
+
 ## 0.7.0
 * Fixed bytes in example project.
 * Fixed mp4 were not detected properly.
