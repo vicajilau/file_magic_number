@@ -10,14 +10,17 @@
     <img src="https://img.shields.io/pub/v/file_magic_number?label=pub.dev&labelColor=333940&logo=dart" alt="Pub Version">
   </a>
   <a href="https://github.com/vicajilau/file_magic_number/actions/workflows/dart_analyze_unit_test.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/vicajilau/file_magic_number/dart_analyze_unit_test.yml?branch=main&label=tests&labelColor=333940&logo=github" alt="CI Status">
+    <img src="https://img.shields.io/github/actions/workflow/status/vicajilau/file_magic_number/dart_analyze_unit_test.yml?branch=main&label=CI&labelColor=333940&logo=github" alt="CI Status">
+  </a>
+  <a href="https://github.com/vicajilau/pdf_combiner/actions/workflows/publish_pub_dev.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/vicajilau/file_magic_number/publish_pub_dev.yml?label=CD&labelColor=333940&logo=github" alt="CD Status">
   </a>
   <a href="https://codecov.io/gh/vicajilau/file_magic_number">
     <img src="https://img.shields.io/codecov/c/github/vicajilau/file_magic_number?logo=codecov&logoColor=fff&labelColor=333940" alt="Code Coverage">
   </a>
 </p>
 
-A Dart & Flutter package to detect file types based on their magic number instead of relying on MIME types. Works on Flutter for mobile, desktop, and web without requiring native code.
+A Flutter package to detect file types based on their magic number instead of relying on MIME types. Works on Flutter for mobile, desktop, and web without requiring native code.
 
 ## 🚀 Features
 - Detects file types using their magic number (signature bytes)
@@ -33,12 +36,7 @@ dependencies:
   file_magic_number: latest_version
 ```
 
-Then for Dart, run:
-```sh
-dart pub get
-```
-
-Or for Flutter, run:
+Then for Flutter, run:
 ```sh
 flutter pub get
 ```
