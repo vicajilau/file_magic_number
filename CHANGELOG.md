@@ -1,3 +1,9 @@
+## 0.8.0
+* Simplified CI.
+* Improved CD.
+* Fixed readme.
+* Migrated from Dart to Flutter package.
+
 ## 0.7.2
 * Improved `MagicNumberMatchType` for offset and exact detection.
 * Clearer documentation improvements.
