@@ -44,18 +44,35 @@ flutter pub get
 ## 🛠️ Usage
 
 ### Detect a file type from bytes
+We can synchronously detect the file type using the bytes of the file.
 ```dart
 import 'package:file_magic_number/file_magic_number.dart';
 
-void main() async {
+void main() {
   final bytes = Uint8List.fromList([0x25, 0x50, 0x44, 0x46]);
   final FileMagicNumberType fileType = FileMagicNumber.detectFileTypeFromBytes(bytes);
   print(fileType);
 }
 ```
 
+### Detect a file type from path or blob
+We can asynchronously detect the file type using the path or blob of the file. 
+This requires that for Android, iOS, Linux, MacOS and Windows version we pass the file path. 
+In the web version this parameter must be the blob of the file.
+```dart
+import 'package:file_magic_number/file_magic_number.dart';
+
+void main() async {
+  final pathOrBlob = "my_path_or_blob";
+  final FileMagicNumberType fileType = await FileMagicNumber.detectFileTypeFromPathOrBlob(pathOrBlob);
+  print(fileType);
+}
+```
+
 ### Detect a file type from file_picker
 Integrating file_magic_number with [file_picker](https://pub.dev/packages/file_picker) allows you to easily detect the type of a file selected by the user without relying on MIME types.
+
+#### Using bytes
 You can use file_picker to open the file dialog and then pass the file's bytes to [FileMagicNumber.detectFileTypeFromBytes](https://github.com/vicajilau/file_magic_number/blob/main/lib/file_magic_number_type.dart) to identify its type.
 Here's how you can do it:
 ```dart
@@ -66,7 +83,24 @@ void main() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles(withData: true);
 
   if (result != null) {
-    final FileMagicNumberType fileType = FileMagicNumber.detectFileTypeFromBytes(result.files.single.bytes!);
+    final FileMagicNumberType fileType = FileMagicNumber.detectFileTypeFromBytes(result.files.single.bytes);
+    print(fileType);
+  }
+}
+```
+
+#### Using pathOrBlob
+You can use file_picker to open the file dialog and then pass the file's path or blob to [FileMagicNumber.detectFileTypeFromBytes](https://github.com/vicajilau/file_magic_number/blob/main/lib/file_magic_number_type.dart) to identify its type.
+Here's how you can do it:
+```dart
+import 'package:file_magic_number/file_magic_number.dart';
+import 'package:file_picker/file_picker.dart';
+
+void main() async {
+  FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+  if (result != null && result.files.single.path != null) {
+    final FileMagicNumberType fileType = await FileMagicNumber.detectFileTypeFromPathOrBlob(result.files.single.path!);
     print(fileType);
   }
 }

@@ -1,5 +1,6 @@
 ## 1.1.0
 * Added `detectFileTypeFromPathOrBlob` method.
+* Improved documentation.
 
 ## 1.0.0
 * **BREAKING CHANGE:** `MagicNumber` has been renamed to `FileMagicNumber`.
