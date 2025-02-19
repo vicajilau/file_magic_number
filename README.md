@@ -49,14 +49,14 @@ import 'package:file_magic_number/file_magic_number.dart';
 
 void main() async {
   final bytes = Uint8List.fromList([0x25, 0x50, 0x44, 0x46]);
-  final FileMagicNumberType fileType = FileMagicNumber.detectFileType(bytes);
+  final FileMagicNumberType fileType = FileMagicNumber.detectFileTypeFromBytes(bytes);
   print(fileType);
 }
 ```
 
 ### Detect a file type from file_picker
 Integrating file_magic_number with [file_picker](https://pub.dev/packages/file_picker) allows you to easily detect the type of a file selected by the user without relying on MIME types.
-You can use file_picker to open the file dialog and then pass the file's bytes to [FileMagicNumber.detectFileType](https://github.com/vicajilau/file_magic_number/blob/main/lib/file_magic_number_type.dart) to identify its type.
+You can use file_picker to open the file dialog and then pass the file's bytes to [FileMagicNumber.detectFileTypeFromBytes](https://github.com/vicajilau/file_magic_number/blob/main/lib/file_magic_number_type.dart) to identify its type.
 Here's how you can do it:
 ```dart
 import 'package:file_magic_number/file_magic_number.dart';
