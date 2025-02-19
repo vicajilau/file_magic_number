@@ -1,3 +1,4 @@
+import 'package:example/debug.dart';
 import 'package:example/uint8list_extension.dart';
 import 'package:file_magic_number/file_magic_number.dart';
 import 'package:file_magic_number/file_magic_number_type.dart';
@@ -34,6 +35,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   FileMagicNumberType? _typeFile;
+  String? _error;
 
   void _loadFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -42,8 +44,20 @@ class _MyHomePageState extends State<MyHomePage> {
     if (result != null) {
       final bytes = result.files.single.bytes;
       bytes?.printInDebug(fileName: result.files.single.name);
+      final bytesType = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      final pathType = await FileMagicNumber.detectFileTypeFromPathOrBlob(
+        result.files.single.path!,
+      );
       setState(() {
-        _typeFile = FileMagicNumber.detectFileTypeFromBytes(bytes);
+        if (bytesType == pathType) {
+          _typeFile = bytesType;
+          _error = null;
+        } else {
+          _typeFile = FileMagicNumberType.unknown;
+          _error = "FILE TYPES DO NOT MATCH";
+        }
+        printInDebug("FileMagicNumberType using bytes is: $bytesType");
+        printInDebug("FileMagicNumberType using path is: $pathType");
       });
     }
   }
@@ -61,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const Text('The loaded file is of type:'),
             Text(
-              _typeFile?.name ?? "FILE NOT LOADED",
+              _error ?? _typeFile?.name ?? "FILE NOT LOADED",
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],

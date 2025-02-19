@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:file_magic_number/file_magic_number_type.dart';
+import 'package:file_magic_number/reader/file_magic_number_reader_selector.dart';
 
 import 'file_magic_number_match_type.dart';
 
@@ -78,6 +79,26 @@ class FileMagicNumber {
       }
     }
     return FileMagicNumberType.unknown;
+  }
+
+  /// Detects the file type from a byte array using its magic number.
+  ///
+  /// - [bytes]: The byte data of the file.
+  /// - Returns the detected file type, or `FileMagicNumberType.unknown` if not recognized.
+  /// - Returns `FileMagicNumberType.emptyFile` if the byte array is empty.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// Uint8List fileBytes = await someMethodToGetBytes();
+  /// FileMagicNumberType fileType = MagicNumber.detectFileType(fileBytes);
+  /// print(fileType); // Output: FileMagicNumberType.png, FileMagicNumberType.pdf, etc.
+  /// ```
+  static Future<FileMagicNumberType> detectFileTypeFromPathOrBlob(
+    String pathOrBlob,
+  ) async {
+    final reader = FileMagicNumberReader();
+    final bytes = await reader.readFile(pathOrBlob);
+    return detectFileTypeFromBytes(bytes);
   }
 
   /// Checks if the given byte sequence matches a known magic number signature exactly.
