@@ -1,3 +1,7 @@
+## 1.1.1
+* Minor improvements.
+* Added more documentation.
+
 ## 1.1.0
 * Added `detectFileTypeFromPathOrBlob` method.
 * Improved documentation.
