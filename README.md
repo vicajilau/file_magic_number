@@ -60,7 +60,7 @@ We can asynchronously detect the file type using the path or blob of the file.
 This requires that for Android, iOS, Linux, MacOS, and Windows, we pass the file path.  
 In the web version, this parameter must be the blob of the file.
 
-> **Note:** This `detectFileTypeFromPathOrBlob` method may throw a `PathNotFoundException` if the file is not found.  
+> **Note:** This method may throw a `PathNotFoundException` if the file is not found.  
 > It is recommended to handle this exception appropriately as shown in the following example.
 
 ```dart
@@ -101,7 +101,7 @@ void main() async {
 You can use file_picker to open the file dialog and then pass the file's path or blob to [FileMagicNumber.detectFileTypeFromBytes](https://github.com/vicajilau/file_magic_number/blob/main/lib/file_magic_number_type.dart) to identify its type.
 Here's how you can do it:
 
-> **Note:** This `detectFileTypeFromPathOrBlob` method may throw a `PathNotFoundException` if the file is not found.  
+> **Note:** This method may throw a `PathNotFoundException` if the file is not found.  
 > It is recommended to handle this exception appropriately as shown in the following example.
 
 ```dart
