@@ -56,16 +56,24 @@ void main() {
 ```
 
 ### Detect a file type from path or blob
-We can asynchronously detect the file type using the path or blob of the file. 
-This requires that for Android, iOS, Linux, MacOS and Windows version we pass the file path. 
-In the web version this parameter must be the blob of the file.
+We can asynchronously detect the file type using the path or blob of the file.  
+This requires that for Android, iOS, Linux, MacOS, and Windows, we pass the file path.  
+In the web version, this parameter must be the blob of the file.
+
+> **Note:** This `detectFileTypeFromPathOrBlob` method may throw a `PathNotFoundException` if the file is not found.  
+> It is recommended to handle this exception appropriately as shown in the following example.
+
 ```dart
 import 'package:file_magic_number/file_magic_number.dart';
 
 void main() async {
   final pathOrBlob = "my_path_or_blob";
-  final FileMagicNumberType fileType = await FileMagicNumber.detectFileTypeFromPathOrBlob(pathOrBlob);
-  print(fileType);
+  try {
+    final FileMagicNumberType fileType = await FileMagicNumber.detectFileTypeFromPathOrBlob(pathOrBlob);
+    print(fileType);
+  } catch (e) {
+    print("The file was not found.");
+  }
 }
 ```
 
@@ -92,6 +100,10 @@ void main() async {
 #### Using pathOrBlob
 You can use file_picker to open the file dialog and then pass the file's path or blob to [FileMagicNumber.detectFileTypeFromBytes](https://github.com/vicajilau/file_magic_number/blob/main/lib/file_magic_number_type.dart) to identify its type.
 Here's how you can do it:
+
+> **Note:** This `detectFileTypeFromPathOrBlob` method may throw a `PathNotFoundException` if the file is not found.  
+> It is recommended to handle this exception appropriately as shown in the following example.
+
 ```dart
 import 'package:file_magic_number/file_magic_number.dart';
 import 'package:file_picker/file_picker.dart';
@@ -100,8 +112,12 @@ void main() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles();
 
   if (result != null && result.files.single.path != null) {
-    final FileMagicNumberType fileType = await FileMagicNumber.detectFileTypeFromPathOrBlob(result.files.single.path!);
-    print(fileType);
+    try {
+      final FileMagicNumberType fileType = await FileMagicNumber.detectFileTypeFromPathOrBlob(result.files.single.path!);
+      print(fileType);
+    } catch (e) {
+      print("The file was not found.");
+    }
   }
 }
 ```
