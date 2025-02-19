@@ -5,7 +5,7 @@ import 'package:file_magic_number/file_magic_number_type.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('MagicNumber', () {
+  group('FileMagicNumber - detectFileTypeFromBytes', () {
     test('Detects ZIP file', () {
       final bytes = Uint8List.fromList([0x50, 0x4B, 0x03, 0x04]);
       final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
