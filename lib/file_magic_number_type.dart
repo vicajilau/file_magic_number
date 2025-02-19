@@ -1,4 +1,4 @@
-import 'package:file_magic_number/magic_number_match_type.dart';
+import 'package:file_magic_number/file_magic_number_match_type.dart';
 
 /// Enum representing different file types based on their magic numbers.
 ///
@@ -8,7 +8,7 @@ import 'package:file_magic_number/magic_number_match_type.dart';
 ///
 /// The `unknown` type is returned when the file type cannot be determined,
 /// and `emptyFile` is used when the input is null or contains no data.
-enum MagicNumberType {
+enum FileMagicNumberType {
   /// File type could not be determined from the magic number.
   unknown,
 
@@ -74,12 +74,12 @@ enum MagicNumberType {
   /// offset, so they are matched differently (`offset`).
   ///
   /// This method is used internally by the library during file type detection.
-  MagicNumberMatchType get matchType {
+  FileMagicNumberMatchType get matchType {
     switch (this) {
-      case MagicNumberType.mp4:
-        return MagicNumberMatchType.offset;
+      case FileMagicNumberType.mp4:
+        return FileMagicNumberMatchType.offset;
       default:
-        return MagicNumberMatchType.exact;
+        return FileMagicNumberMatchType.exact;
     }
   }
 }

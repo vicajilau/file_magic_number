@@ -1,41 +1,41 @@
 import 'dart:typed_data';
 
-import 'package:file_magic_number/magic_number_type.dart';
+import 'package:file_magic_number/file_magic_number_type.dart';
 
-import 'magic_number_match_type.dart';
+import 'file_magic_number_match_type.dart';
 
 /// A utility class for detecting file types based on their magic numbers.
 ///
 /// Magic numbers are specific byte sequences at the beginning of a file
 /// that indicate its format. This approach is more reliable than using MIME types.
-class MagicNumber {
+class FileMagicNumber {
   /// A map of known magic number signatures associated with file types.
-  static const Map<List<int>, MagicNumberType> _magicNumbers = {
+  static const Map<List<int>, FileMagicNumberType> _magicNumbers = {
     // Compressed files
-    [0x50, 0x4B, 0x03, 0x04]: MagicNumberType.zip,
-    [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00]: MagicNumberType.rar,
-    [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07]: MagicNumberType.rar,
-    [0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C]: MagicNumberType.sevenZ,
+    [0x50, 0x4B, 0x03, 0x04]: FileMagicNumberType.zip,
+    [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00]: FileMagicNumberType.rar,
+    [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07]: FileMagicNumberType.rar,
+    [0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C]: FileMagicNumberType.sevenZ,
 
     // Images
-    [0x89, 0x50, 0x4E, 0x47]: MagicNumberType.png,
-    [0xFF, 0xD8, 0xFF]: MagicNumberType.jpg,
-    [0x47, 0x49, 0x46, 0x38]: MagicNumberType.gif,
-    [0x49, 0x49, 0x2A, 0x00]: MagicNumberType.tiff,
-    [0x4D, 0x4D, 0x00, 0x2A]: MagicNumberType.tiff,
-    [0x42, 0x4D]: MagicNumberType.bmp,
+    [0x89, 0x50, 0x4E, 0x47]: FileMagicNumberType.png,
+    [0xFF, 0xD8, 0xFF]: FileMagicNumberType.jpg,
+    [0x47, 0x49, 0x46, 0x38]: FileMagicNumberType.gif,
+    [0x49, 0x49, 0x2A, 0x00]: FileMagicNumberType.tiff,
+    [0x4D, 0x4D, 0x00, 0x2A]: FileMagicNumberType.tiff,
+    [0x42, 0x4D]: FileMagicNumberType.bmp,
 
     // Audio & Video
-    [0x49, 0x44, 0x33]: MagicNumberType.mp3,
-    [0x52, 0x49, 0x46, 0x46]: MagicNumberType.wav,
-    [0x66, 0x74, 0x79, 0x70]: MagicNumberType.mp4,
+    [0x49, 0x44, 0x33]: FileMagicNumberType.mp3,
+    [0x52, 0x49, 0x46, 0x46]: FileMagicNumberType.wav,
+    [0x66, 0x74, 0x79, 0x70]: FileMagicNumberType.mp4,
 
     // Other formats
-    [0x25, 0x50, 0x44, 0x46]: MagicNumberType.pdf,
-    [0x7F, 0x45, 0x4C, 0x46]: MagicNumberType.elf,
-    [0x4D, 0x5A]: MagicNumberType.exe,
-    [0x75, 0x73, 0x74, 0x61, 0x72]: MagicNumberType.tar,
-    [0x53, 0x51, 0x4C, 0x69, 0x74, 0x65]: MagicNumberType.sqlite,
+    [0x25, 0x50, 0x44, 0x46]: FileMagicNumberType.pdf,
+    [0x7F, 0x45, 0x4C, 0x46]: FileMagicNumberType.elf,
+    [0x4D, 0x5A]: FileMagicNumberType.exe,
+    [0x75, 0x73, 0x74, 0x61, 0x72]: FileMagicNumberType.tar,
+    [0x53, 0x51, 0x4C, 0x69, 0x74, 0x65]: FileMagicNumberType.sqlite,
   };
 
   /// The length of the longest known magic number signature, doubled.
@@ -46,18 +46,18 @@ class MagicNumber {
   /// Detects the file type from a byte array using its magic number.
   ///
   /// - [bytes]: The byte data of the file.
-  /// - Returns the detected file type, or `MagicNumberType.unknown` if not recognized.
-  /// - Returns `MagicNumberType.emptyFile` if the byte array is empty.
+  /// - Returns the detected file type, or `FileMagicNumberType.unknown` if not recognized.
+  /// - Returns `FileMagicNumberType.emptyFile` if the byte array is empty.
   ///
   /// Example usage:
   /// ```dart
   /// Uint8List fileBytes = await someMethodToGetBytes();
-  /// MagicNumberType fileType = MagicNumber.detectFileType(fileBytes);
-  /// print(fileType); // Output: MagicNumberType.png, MagicNumberType.pdf, etc.
+  /// FileMagicNumberType fileType = MagicNumber.detectFileType(fileBytes);
+  /// print(fileType); // Output: FileMagicNumberType.png, FileMagicNumberType.pdf, etc.
   /// ```
-  static MagicNumberType detectFileType(Uint8List? bytes) {
+  static FileMagicNumberType detectFileTypeFromBytes(Uint8List? bytes) {
     if (bytes == null || bytes.isEmpty) {
-      return MagicNumberType.emptyFile;
+      return FileMagicNumberType.emptyFile;
     }
 
     // Only check the first `_maxSignatureLength` bytes to avoid unnecessary processing.
@@ -67,7 +67,7 @@ class MagicNumber {
             : bytes;
 
     for (var entry in _magicNumbers.entries) {
-      if (entry.value.matchType == MagicNumberMatchType.exact) {
+      if (entry.value.matchType == FileMagicNumberMatchType.exact) {
         if (_matchesExact(limitedBytes, entry.key)) {
           return entry.value;
         }
@@ -77,7 +77,7 @@ class MagicNumber {
         }
       }
     }
-    return MagicNumberType.unknown;
+    return FileMagicNumberType.unknown;
   }
 
   /// Checks if the given byte sequence matches a known magic number signature exactly.

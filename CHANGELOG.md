@@ -1,3 +1,8 @@
+## 1.0.0
+* **BREAKING CHANGE:** `MagicNumber` has been renamed to `FileMagicNumber`.
+* **BREAKING CHANGE:** `MagicNumberType` has been renamed to `FileMagicNumberType`.
+* **BREAKING CHANGE:** `detectFileType` has been renamed to `detectFileTypeFromBytes`.
+
 ## 0.8.0
 * Simplified CI.
 * Improved CD.

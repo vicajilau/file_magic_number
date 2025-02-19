@@ -1,6 +1,6 @@
 import 'package:example/uint8list_extension.dart';
 import 'package:file_magic_number/file_magic_number.dart';
-import 'package:file_magic_number/magic_number_type.dart';
+import 'package:file_magic_number/file_magic_number_type.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  MagicNumberType? _typeFile;
+  FileMagicNumberType? _typeFile;
 
   void _loadFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
       final bytes = result.files.single.bytes;
       bytes?.printInDebug(fileName: result.files.single.name);
       setState(() {
-        _typeFile = MagicNumber.detectFileType(bytes);
+        _typeFile = FileMagicNumber.detectFileTypeFromBytes(bytes);
       });
     }
   }
