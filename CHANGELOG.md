@@ -1,3 +1,7 @@
+## X.Y.Z
+* Updated example project dependencies
+* Improved tests
+
 ## 1.1.1
 * Minor improvements.
 * Added more documentation.
