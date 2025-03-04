@@ -9,7 +9,7 @@ extension FileExtension on File {
   /// and writes it to the file asynchronously.
   ///
   /// [bytes] - A list of integers representing the byte data to be written to the file.
-  void writeToFile(List<int> bytes) async {
+  Future<void> writeToFile(List<int> bytes) async {
     await writeAsBytes(Uint8List.fromList(bytes));
   }
 }

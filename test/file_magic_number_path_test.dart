@@ -8,32 +8,24 @@ import 'file_extension.dart';
 
 void main() {
   group('FileMagicNumber detectFileTypeFromPathOrBlob (IO)', () {
-    late File testFile;
-
-    setUp(() async {
-      testFile = File('test.txt');
-    });
-
-    tearDown(() async {
-      if (await testFile.exists()) {
-        await testFile.delete();
-      }
-    });
-
     test('Detects RAR v5 file', () async {
-      testFile.writeToFile([0x52, 0x61, 0x72, 0x21, 0x1A, 0x07]);
+      final testFile = File('RARv5.txt');
+      await testFile.writeToFile([0x52, 0x61, 0x72, 0x21, 0x1A, 0x07]);
       final result = await FileMagicNumber.detectFileTypeFromPathOrBlob(
         testFile.path,
       );
       expect(result, FileMagicNumberType.rar);
+      await testFile.delete();
     });
 
     test('Detects empty file', () async {
-      testFile.writeToFile([]);
+      final testFile = File('empty.txt');
+      await testFile.writeToFile([]);
       final result = await FileMagicNumber.detectFileTypeFromPathOrBlob(
         testFile.path,
       );
       expect(result, FileMagicNumberType.emptyFile);
+      await testFile.delete();
     });
 
     test(
