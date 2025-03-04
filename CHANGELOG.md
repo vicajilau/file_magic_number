@@ -1,6 +1,7 @@
 ## X.Y.Z
 * Updated example project dependencies
 * Improved tests
+* Improved example project flow and style
 
 ## 1.1.1
 * Minor improvements.
