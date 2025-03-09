@@ -10,7 +10,7 @@ class FileMagicNumberReader {
   /// - [path]: The absolute path of the file to read.
   /// - Returns: A `Uint8List` containing the binary content of the file.
   /// - Throws: An `IOException` if there is an error reading the file.
-  Future<Uint8List?> readFile(String path) async {
+  Future<Uint8List> readFile(String path) async {
     // Create a File object for the provided file path.
     final file = File(path);
 

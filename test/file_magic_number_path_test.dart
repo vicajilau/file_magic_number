@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_magic_number/file_magic_number.dart';
 import 'package:file_magic_number/file_magic_number_type.dart';
@@ -39,5 +40,16 @@ void main() {
         );
       },
     );
+  });
+
+  test('Detects Uint8list file', () async {
+    final testFile = File('RARv5.txt');
+    final bytes = [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07];
+    await testFile.writeToFile(bytes);
+    final result = await FileMagicNumber.getBytesFromPathOrBlob(
+      testFile.path,
+    );
+    expect(result, Uint8List.fromList(bytes));
+    await testFile.delete();
   });
 }

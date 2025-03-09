@@ -1,7 +1,8 @@
-## X.Y.Z
+## 1.2.0
 * Updated example project dependencies
 * Improved tests
 * Improved example project flow and style
+* Added `getBytesFromPathOrBlob` method returning `Uint8List` object.
 
 ## 1.1.1
 * Minor improvements.

@@ -101,6 +101,19 @@ class FileMagicNumber {
     return detectFileTypeFromBytes(bytes);
   }
 
+  /// Asynchronously reads a file or blob from the given [pathOrBlob] and returns its content as a [Uint8List].
+  ///
+  /// This method uses the [FileMagicNumberReader] to read the file or blob based on the provided input.
+  /// It handles both file paths and Blob URLs, ensuring that the file content is returned as a byte array.
+  ///
+  /// [pathOrBlob]: A string representing either a file path or a Blob URL.
+  ///
+  /// Returns a [Future<Uint8List>] that resolves to the content of the file as a byte array.
+  static Future<Uint8List> getBytesFromPathOrBlob(String pathOrBlob) async {
+    final reader = FileMagicNumberReader();
+    return await reader.readFile(pathOrBlob);
+  }
+
   /// Checks if the given byte sequence matches a known magic number signature exactly.
   static bool _matchesExact(Uint8List bytes, List<int> signature) {
     if (bytes.length < signature.length) return false;
