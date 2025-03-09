@@ -24,6 +24,7 @@ A Flutter package to detect file types based on their magic number instead of re
 
 ## 🚀 Features
 - Detects file types using their magic number (signature bytes)
+- Get bytes `Uint8List` from path or blob. 
 - Supports Flutter on Android, iOS, macOS, Windows, Linux, and Web
 - No need for native plugins
 - Lightweight and easy to extend with custom signatures
@@ -70,6 +71,28 @@ void main() async {
   final pathOrBlob = "my_path_or_blob";
   try {
     final FileMagicNumberType fileType = await FileMagicNumber.detectFileTypeFromPathOrBlob(pathOrBlob);
+    print(fileType);
+  } catch (e) {
+    print("The file was not found.");
+  }
+}
+```
+
+### Get Uint8List from path or blob
+We can asynchronously get the bytes of the file using the path or blob of the file.  
+This requires that for Android, iOS, Linux, MacOS, and Windows, we pass the file path.  
+In the web version, this parameter must be the blob of the file.
+
+> **Note:** This method may throw a `PathNotFoundException` if the file is not found.  
+> It is recommended to handle this exception appropriately as shown in the following example.
+
+```dart
+import 'package:file_magic_number/file_magic_number.dart';
+
+void main() async {
+  final pathOrBlob = "my_path_or_blob";
+  try {
+    final Uint8List bytes = await FileMagicNumber.getBytesFromPathOrBlob(pathOrBlob);
     print(fileType);
   } catch (e) {
     print("The file was not found.");
