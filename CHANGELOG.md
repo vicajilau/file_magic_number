@@ -1,3 +1,6 @@
+## 1.2.1
+* Increased support for Dart from version 3.4.
+
 ## 1.2.0
 * Updated example project dependencies
 * Improved tests
