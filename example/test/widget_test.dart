@@ -13,7 +13,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
+    // Verify that title of the app is correct.
     expect(find.text('Flutter File Magic Number Demo'), findsOneWidget);
     expect(find.text('1'), findsNothing);
   });
