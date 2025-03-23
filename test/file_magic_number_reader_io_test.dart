@@ -14,7 +14,7 @@ void main() {
       await testFile.writeAsBytes(
         Uint8List.fromList([0x25, 0x50, 0x44, 0x46]),
       ); // "%PDF"
-      final Uint8List? result = await reader.readFile(testFile.path);
+      final Uint8List result = await reader.readFile(testFile.path);
 
       expect(result, isNotNull);
       expect(result, equals(Uint8List.fromList([0x25, 0x50, 0x44, 0x46])));
