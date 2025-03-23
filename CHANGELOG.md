@@ -1,6 +1,7 @@
 ## 1.2.2
 * Updated documentation.
-* Updated example project dependencies.
+* Updated dependencies from example project.
+* Removed cocoapods from example project.
 
 ## 1.2.1
 * Increased support for Dart from version 3.4.
