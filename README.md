@@ -93,7 +93,7 @@ void main() async {
   final pathOrBlob = "my_path_or_blob";
   try {
     final Uint8List bytes = await FileMagicNumber.getBytesFromPathOrBlob(pathOrBlob);
-    print(fileType);
+    print(bytes);
   } catch (e) {
     print("The file was not found.");
   }
