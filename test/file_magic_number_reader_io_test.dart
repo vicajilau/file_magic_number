@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:file_magic_number/reader/file_magic_number_reader_io.dart';
+import 'package:file_magic_number/file_magic_number.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

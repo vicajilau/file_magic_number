@@ -156,6 +156,7 @@ void main() async {
 | PNG       | 89 50 4E 47 0D 0A 1A 0A   |
 | JPG       | FF D8 FF                  |
 | GIF       | 47 49 46 38               |
+| HEIC      | 66 74 79 70 68 65 69 63   |
 | TIFF      | 49 49 2A 00 / 4D 4D 00 2A |
 | BMP       | 42 4D                     |
 | MP3       | 49 44 33                  |

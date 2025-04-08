@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:file_magic_number/file_magic_number.dart';
-import 'package:file_magic_number/file_magic_number_type.dart';
+import 'package:file_magic_number/src/file_magic_number.dart';
+import 'package:file_magic_number/src/file_magic_number_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'file_extension.dart';

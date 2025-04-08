@@ -1,4 +1,4 @@
-import 'package:file_magic_number/file_magic_number_match_type.dart';
+import 'package:file_magic_number/src/file_magic_number_match_type.dart';
 
 /// Enum representing different file types based on their magic numbers.
 ///
@@ -40,6 +40,10 @@ enum FileMagicNumberType {
 
   /// BMP (Bitmap) image format.
   bmp,
+
+  /// HEIC (High Efficiency Image Coding), part of the HEIF (High Efficiency Image File) format.
+  /// Commonly used by Apple devices for photos.
+  heic,
 
   // Audio and video formats
   /// MP3 (MPEG Audio Layer III) audio file format.
