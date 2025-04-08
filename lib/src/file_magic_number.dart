@@ -1,9 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:file_magic_number/src/file_magic_number_type.dart';
-import 'package:file_magic_number/src/reader/file_magic_number_reader_selector.dart';
-
-import 'file_magic_number_match_type.dart';
+import '../file_magic_number.dart';
 
 /// A utility class for detecting file types based on their magic numbers.
 ///

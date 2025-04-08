@@ -1,4 +1,4 @@
-import 'package:file_magic_number/file_magic_number.dart';
+import 'package:file_magic_number/src/reader/file_magic_number_reader_base.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
