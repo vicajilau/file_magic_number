@@ -1,7 +1,7 @@
 ## 1.3.0
 * Added HEIC (High Efficiency Image Coding) support, part of the HEIF (High Efficiency Image File) format.
-* Resolved an issue where private files are exposed to be imported.
-* Individual files can be dragged and dropped on desktop and web apps. 
+* **Breaking change:** Resolved an issue with imports where private files are exposed to be imported.
+* Individual files can be dragged and dropped on desktop apps and web app on example project.
 
 ## 1.2.2
 * Updated documentation.
