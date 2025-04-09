@@ -86,7 +86,8 @@ void main() {
     });
 
     test('Detects MP4 file', () {
-      final bytes = Uint8List.fromList([0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D]);
+      final bytes =
+          Uint8List.fromList([0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D]);
       final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
       expect(result, FileMagicNumberType.mp4);
     });
@@ -134,10 +135,44 @@ void main() {
 
     test('Detects MP4 file when bytes.length > _maxSignatureLength', () {
       final bytes = Uint8List.fromList(
-        [0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D] + List.filled(100, 0x00),
+        [0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D] +
+            List.filled(100, 0x00),
       );
       final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
       expect(result, FileMagicNumberType.mp4);
+    });
+
+    test('Detects HEIC file with ftypmi signature', () {
+      final bytes = Uint8List.fromList([0x66, 0x74, 0x79, 0x70, 0x6D, 0x69]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.heic);
+    });
+
+    test('Detects HEIC file with ftypmi signature', () {
+      final bytes = Uint8List.fromList([0x66, 0x74, 0x79, 0x70, 0x6D, 0x69]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.heic);
+    });
+
+    test('Detects HEIC file with ftypheic signature', () {
+      final bytes =
+          Uint8List.fromList([0x66, 0x74, 0x79, 0x70, 0x68, 0x65, 0x69, 0x63]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.heic);
+    });
+
+    test('Detects HEIC file with ftypmif1 signature', () {
+      final bytes =
+          Uint8List.fromList([0x66, 0x74, 0x79, 0x70, 0x6D, 0x69, 0x66, 0x31]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.heic);
+    });
+
+    test('Detects HEIC file with ftypheix signature', () {
+      final bytes =
+          Uint8List.fromList([0x66, 0x74, 0x79, 0x70, 0x68, 0x65, 0x69, 0x78]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.heic);
     });
   });
 }
