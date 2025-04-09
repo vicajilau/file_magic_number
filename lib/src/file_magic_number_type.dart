@@ -81,6 +81,7 @@ enum FileMagicNumberType {
   FileMagicNumberMatchType get matchType {
     switch (this) {
       case FileMagicNumberType.mp4:
+      case FileMagicNumberType.heic:
         return FileMagicNumberMatchType.offset;
       default:
         return FileMagicNumberMatchType.exact;

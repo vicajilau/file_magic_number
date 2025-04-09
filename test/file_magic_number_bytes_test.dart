@@ -86,7 +86,7 @@ void main() {
     });
 
     test('Detects MP4 file', () {
-      final bytes = Uint8List.fromList([0x66, 0x74, 0x79, 0x70]);
+      final bytes = Uint8List.fromList([0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D]);
       final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
       expect(result, FileMagicNumberType.mp4);
     });
@@ -134,7 +134,7 @@ void main() {
 
     test('Detects MP4 file when bytes.length > _maxSignatureLength', () {
       final bytes = Uint8List.fromList(
-        [0x66, 0x74, 0x79, 0x70] + List.filled(16, 0x00),
+        [0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D] + List.filled(100, 0x00),
       );
       final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
       expect(result, FileMagicNumberType.mp4);

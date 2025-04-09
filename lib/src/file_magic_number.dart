@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:file_magic_number/src/magic_number_list.dart';
+
 import '../file_magic_number.dart';
 
 /// A utility class for detecting file types based on their magic numbers.
@@ -7,38 +9,10 @@ import '../file_magic_number.dart';
 /// Magic numbers are specific byte sequences at the beginning of a file
 /// that indicate its format. This approach is more reliable than using MIME types.
 class FileMagicNumber {
-  /// A map of known magic number signatures associated with file types.
-  static const Map<List<int>, FileMagicNumberType> _magicNumbers = {
-    // Compressed files
-    [0x50, 0x4B, 0x03, 0x04]: FileMagicNumberType.zip,
-    [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00]: FileMagicNumberType.rar,
-    [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07]: FileMagicNumberType.rar,
-    [0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C]: FileMagicNumberType.sevenZ,
-
-    // Images
-    [0x89, 0x50, 0x4E, 0x47]: FileMagicNumberType.png,
-    [0xFF, 0xD8, 0xFF]: FileMagicNumberType.jpg,
-    [0x47, 0x49, 0x46, 0x38]: FileMagicNumberType.gif,
-    [0x49, 0x49, 0x2A, 0x00]: FileMagicNumberType.tiff,
-    [0x4D, 0x4D, 0x00, 0x2A]: FileMagicNumberType.tiff,
-    [0x42, 0x4D]: FileMagicNumberType.bmp,
-    [0x66, 0x74, 0x79, 0x70, 0x68, 0x65, 0x69, 0x63]: FileMagicNumberType.heic,
-
-    // Audio & Video
-    [0x49, 0x44, 0x33]: FileMagicNumberType.mp3,
-    [0x52, 0x49, 0x46, 0x46]: FileMagicNumberType.wav,
-    [0x66, 0x74, 0x79, 0x70]: FileMagicNumberType.mp4,
-
-    // Other formats
-    [0x25, 0x50, 0x44, 0x46]: FileMagicNumberType.pdf,
-    [0x7F, 0x45, 0x4C, 0x46]: FileMagicNumberType.elf,
-    [0x4D, 0x5A]: FileMagicNumberType.exe,
-    [0x75, 0x73, 0x74, 0x61, 0x72]: FileMagicNumberType.tar,
-    [0x53, 0x51, 0x4C, 0x69, 0x74, 0x65]: FileMagicNumberType.sqlite,
-  };
-
-  /// The length of the longest known magic number signature, doubled.
-  static final int _maxSignatureLength = 8;
+  /// The length of the longest known magic number signature.
+  static final int _maxSignatureLength = MagicNumberList.magicNumbers.keys
+      .map((k) => k.length)
+      .fold<int>(0, (prev, len) => len > prev ? len : prev);
 
   /// Detects the file type from a byte array using its magic number.
   ///
@@ -57,12 +31,16 @@ class FileMagicNumber {
       return FileMagicNumberType.emptyFile;
     }
 
-    // Only check the first `_maxSignatureLength` bytes to avoid unnecessary processing.
-    final Uint8List limitedBytes = bytes.length > _maxSignatureLength
-        ? bytes.sublist(0, _maxSignatureLength)
-        : bytes;
+    // Read more bytes if any type requires offset searching
+    final int lookahead = 64;
 
-    for (var entry in _magicNumbers.entries) {
+    final Uint8List limitedBytes = Uint8List.fromList(
+      bytes.length > _maxSignatureLength + lookahead
+          ? bytes.sublist(0, _maxSignatureLength + lookahead)
+          : bytes,
+    );
+
+    for (var entry in MagicNumberList.magicNumbers.entries) {
       if (entry.value.matchType == FileMagicNumberMatchType.exact) {
         if (_matchesExact(limitedBytes, entry.key)) {
           return entry.value;
