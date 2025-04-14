@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:file_magic_number/src/magic_number_list.dart';
 
 import '../file_magic_number.dart';
+import 'file_magic_number_match_type.dart';
 
 /// A utility class for detecting file types based on their magic numbers.
 ///
@@ -41,7 +42,7 @@ class FileMagicNumber {
     );
 
     for (var entry in MagicNumberList.magicNumbers.entries) {
-      if (entry.value.matchType == FileMagicNumberMatchType.exact) {
+      if (FileMagicNumberMatchType.isExact(entry.value)) {
         if (_matchesExact(limitedBytes, entry.key)) {
           return entry.value;
         }

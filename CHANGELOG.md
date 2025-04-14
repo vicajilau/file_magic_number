@@ -1,3 +1,7 @@
+## 1.3.1
+* Improved file detection.
+* Reorganized code and update dependencies.
+
 ## 1.3.0
 * Added HEIC (High Efficiency Image Coding) support, part of the HEIF (High Efficiency Image File) format.
 * **Breaking change:** Resolved an issue with imports where private files are exposed to be imported.
