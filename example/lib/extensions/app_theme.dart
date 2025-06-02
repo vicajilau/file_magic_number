@@ -51,16 +51,8 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
-        textStyle: TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.bold,
-        ),
+        textStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
       ),
-    ),
-    cardTheme: const CardTheme(
-      color: surfaceColor,
-      elevation: 2.0,
-      margin: EdgeInsets.all(8.0),
     ),
   );
 
@@ -105,11 +97,6 @@ class AppTheme {
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
       ),
-    ),
-    cardTheme: const CardTheme(
-      color: Color(0xFF1E1E1E),
-      elevation: 2.0,
-      margin: EdgeInsets.all(8.0),
     ),
   );
 }
