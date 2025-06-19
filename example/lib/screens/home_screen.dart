@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _loadFileManually() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       withData: true,
-      type: FileType.image,
+      type: FileType.any,
     );
     if (result != null) {
       final bytes = result.files.single.bytes;

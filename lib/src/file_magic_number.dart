@@ -3,17 +3,12 @@ import 'dart:typed_data';
 import 'package:file_magic_number/src/magic_number_list.dart';
 
 import '../file_magic_number.dart';
-import 'file_magic_number_match_type.dart';
 
 /// A utility class for detecting file types based on their magic numbers.
 ///
 /// Magic numbers are specific byte sequences at the beginning of a file
 /// that indicate its format. This approach is more reliable than using MIME types.
 class FileMagicNumber {
-  /// The length of the longest known magic number signature.
-  static final int _maxSignatureLength = MagicNumberList.magicNumbers.keys
-      .map((k) => k.length)
-      .fold<int>(0, (prev, len) => len > prev ? len : prev);
 
   /// Detects the file type from a byte array using its magic number.
   ///
@@ -32,25 +27,10 @@ class FileMagicNumber {
       return FileMagicNumberType.emptyFile;
     }
 
-    // Read more bytes if any type requires offset searching
-    final int lookahead = 64;
-
-    final Uint8List limitedBytes = Uint8List.fromList(
-      bytes.length > _maxSignatureLength + lookahead
-          ? bytes.sublist(0, _maxSignatureLength + lookahead)
-          : bytes,
-    );
-
     for (var entry in MagicNumberList.magicNumbers.entries) {
-      if (FileMagicNumberMatchType.isExact(entry.value)) {
-        if (_matchesExact(limitedBytes, entry.key)) {
+        if (_matchesWithOffset(bytes, entry.key)) {
           return entry.value;
         }
-      } else {
-        if (_matchesWithOffset(limitedBytes, entry.key)) {
-          return entry.value;
-        }
-      }
     }
     return FileMagicNumberType.unknown;
   }
@@ -88,25 +68,26 @@ class FileMagicNumber {
     return await reader.readFile(pathOrBlob);
   }
 
-  /// Checks if the given byte sequence matches a known magic number signature exactly.
-  static bool _matchesExact(Uint8List bytes, List<int> signature) {
-    if (bytes.length < signature.length) return false;
-    for (int i = 0; i < signature.length; i++) {
-      if (bytes[i] != signature[i]) return false;
+  static bool _matchesWithOffset(Uint8List bytes,List<int> signature) {
+
+      for (int i = 0; i <= bytes.length - signature.length; i++) {
+        var bytesFound = _matchAt(bytes, signature, i);
+        if(bytesFound){
+          return bytesFound;
+        }
+      }
+
+
+    return false;
+  }
+
+  static bool _matchAt(Uint8List data, List<int> pattern, int offset) {
+    for (int i = 0; i < pattern.length; i++) {
+      if (data[offset + i] != pattern[i]) {
+        return false;
+      }
     }
     return true;
   }
 
-  /// Checks if the given byte sequence contains the magic number signature at any offset.
-  static bool _matchesWithOffset(Uint8List bytes, List<int> signature) {
-    if (bytes.length < signature.length) return false;
-    for (int i = 0; i <= bytes.length - signature.length; i++) {
-      if (signature.asMap().entries.every(
-            (entry) => bytes[i + entry.key] == entry.value,
-          )) {
-        return true;
-      }
-    }
-    return false;
-  }
 }
