@@ -67,22 +67,20 @@ class FileMagicNumber {
     return await reader.readFile(pathOrBlob);
   }
 
-  /// This function analyzes a Uint8List (a byte array) to detect the type of a file by searching for known magic numbers—specific byte sequences that uniquely identify various file formats.
+  /// Analyzes a Uint8List (a byte array) to detect the type of a file by searching for known magic numbers—specific byte sequences that uniquely identify various file formats.
   ///
   /// Unlike traditional implementations that check only the beginning of a file, this version scans the entire byte stream.
   /// This makes it more robust in scenarios where metadata or prepended headers may obscure the file's signature at the start.
   /// To improve accuracy and avoid false positives, only signatures with at least 4 bytes are scanned across the whole file, while shorter ones are treated more cautiously.
   ///
   /// This detection approach supports a wide range of formats such as PDF, ZIP, MP4, PNG, RAR, and more.
-  /// It is designed to be efficient and extensible, allowing developers to add or refine magic numbers as needed.
-  static bool _matchesWithOffset(Uint8List bytes,List<int> signature) {
-
-      for (int i = 0; i <= bytes.length - signature.length; i++) {
-        var bytesFound = _matchAt(bytes, signature, i);
-        if(bytesFound){
-          return bytesFound;
-        }
+  static bool _matchesWithOffset(Uint8List bytes, List<int> signature) {
+    for (int i = 0; i <= bytes.length - signature.length; i++) {
+      var bytesFound = _matchAt(bytes, signature, i);
+      if (bytesFound) {
+        return bytesFound;
       }
+    }
 
     return false;
   }
