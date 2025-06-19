@@ -9,7 +9,6 @@ import '../file_magic_number.dart';
 /// Magic numbers are specific byte sequences at the beginning of a file
 /// that indicate its format. This approach is more reliable than using MIME types.
 class FileMagicNumber {
-
   /// Detects the file type from a byte array using its magic number.
   ///
   /// - [bytes]: The byte data of the file.
@@ -28,9 +27,9 @@ class FileMagicNumber {
     }
 
     for (var entry in MagicNumberList.magicNumbers.entries) {
-        if (_matchesWithOffset(bytes, entry.key)) {
-          return entry.value;
-        }
+      if (_matchesWithOffset(bytes, entry.key)) {
+        return entry.value;
+      }
     }
     return FileMagicNumberType.unknown;
   }
@@ -85,7 +84,6 @@ class FileMagicNumber {
         }
       }
 
-
     return false;
   }
 
@@ -98,5 +96,4 @@ class FileMagicNumber {
     }
     return true;
   }
-
 }
