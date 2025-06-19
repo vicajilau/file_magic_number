@@ -1,3 +1,9 @@
+## 1.3.2
+* Fixed an issue where PDFA files were not detected.
+* Removed Cocoapods on example project.
+* Fixed an issue loading images on example project.
+* Improved file detection in dynamic magic numbers.
+
 ## 1.3.1
 * Improved file detection.
 * Reorganized code and update dependencies.
