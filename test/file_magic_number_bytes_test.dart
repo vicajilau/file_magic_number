@@ -101,6 +101,17 @@ void main() {
       expect(result, FileMagicNumberType.webp);
     });
 
+    test('Detects AVI file', () {
+      // RIFF....AVI (offset 0: "RIFF", offset 8: "AVI ")
+      final bytes = Uint8List.fromList([
+        0x52, 0x49, 0x46, 0x46, // "RIFF"
+        0x00, 0x00, 0x00, 0x00, // dummy size
+        0x41, 0x56, 0x49, 0x20  // "AVI "
+      ]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.avi);
+    });
+
     test('Detects MP4 file', () {
       final bytes =
           Uint8List.fromList([0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D]);
