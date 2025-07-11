@@ -26,7 +26,7 @@ void main() {
     });
 
     test('Detects RAR v5 file', () {
-      final bytes = Uint8List.fromList([0x52, 0x61, 0x72, 0x21, 0x1A, 0x07]);
+      final bytes = Uint8List.fromList([0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00]);
       final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
       expect(result, FileMagicNumberType.rar);
     });
@@ -80,9 +80,25 @@ void main() {
     });
 
     test('Detects WAV file', () {
-      final bytes = Uint8List.fromList([0x52, 0x49, 0x46, 0x46]);
+      // RIFF....WAVE (offset 0: "RIFF", offset 8: "WAVE")
+      final bytes = Uint8List.fromList([
+        0x52, 0x49, 0x46, 0x46, // "RIFF"
+        0x00, 0x00, 0x00, 0x00, // dummy size
+        0x57, 0x41, 0x56, 0x45  // "WAVE"
+      ]);
       final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
       expect(result, FileMagicNumberType.wav);
+    });
+
+    test('Detects WebP file', () {
+      // RIFF....WEBP (offset 0: "RIFF", offset 8: "WEBP")
+      final bytes = Uint8List.fromList([
+        0x52, 0x49, 0x46, 0x46, // "RIFF"
+        0x00, 0x00, 0x00, 0x00, // dummy size
+        0x57, 0x45, 0x42, 0x50  // "WEBP"
+      ]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.webp);
     });
 
     test('Detects MP4 file', () {
