@@ -1,3 +1,10 @@
+## 1.4.0
+* Fixed an issue where JPEG files were detected as TIFF files [#17](https://github.com/vicajilau/file_magic_number/issues/17).
+* Added webp support.
+* Added AVI support.
+* Improved WAV support.
+* Added magic number detection byRange.
+
 ## 1.3.2
 * Fixed an issue where PDFA files were not detected.
 * Removed Cocoapods on example project.

@@ -7,7 +7,8 @@ import '../file_magic_number.dart';
 /// or if it can appear at any position within a predefined range (`offset`).
 enum FileMagicNumberMatchType {
   exact,
-  offset;
+  offset,
+  byRange;
 
   /// Determines how the magic number should be matched for this file type.
   ///
@@ -16,13 +17,18 @@ enum FileMagicNumberMatchType {
   /// offset, so they are matched differently (`offset`).
   ///
   /// This method is used internally by the library during file type detection.
-  static bool isExact(FileMagicNumberType type) {
+  static FileMagicNumberMatchType get(FileMagicNumberType type) {
     switch (type) {
       case FileMagicNumberType.mp4:
       case FileMagicNumberType.heic:
-        return false;
+      case FileMagicNumberType.pdf:
+        return offset;
+      case FileMagicNumberType.webp:
+      case FileMagicNumberType.wav:
+      case FileMagicNumberType.avi:
+        return byRange;
       default:
-        return true;
+        return exact;
     }
   }
 }

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:file_magic_number/src/magic_number_list.dart';
 
 import '../file_magic_number.dart';
+import 'file_magic_number_match_type.dart';
 
 /// A utility class for detecting file types based on their magic numbers.
 ///
@@ -27,11 +28,44 @@ class FileMagicNumber {
     }
 
     for (var entry in MagicNumberList.magicNumbers.entries) {
-      if (_matchesWithOffset(bytes, entry.key)) {
-        return entry.value;
+      switch (FileMagicNumberMatchType.get(entry.value)) {
+        case FileMagicNumberMatchType.exact:
+          if (_matchAt(bytes, entry.key, 0)) {
+            return entry.value;
+          }
+        case FileMagicNumberMatchType.offset:
+          if (_matchesWithOffset(bytes, entry.key)) {
+            return entry.value;
+          }
+        case FileMagicNumberMatchType.byRange:
+          final value = _detectRiffBasedFormat(bytes);
+          if (value != null) return value;
       }
     }
     return FileMagicNumberType.unknown;
+  }
+
+  static FileMagicNumberType? _detectRiffBasedFormat(Uint8List bytes) {
+    if (bytes.length < 12) return null;
+
+    final isRIFF = bytes[0] == 0x52 &&
+        bytes[1] == 0x49 &&
+        bytes[2] == 0x46 &&
+        bytes[3] == 0x46;
+
+    if (!isRIFF) return null;
+
+    final format = String.fromCharCodes(bytes.sublist(8, 12));
+    switch (format) {
+      case 'WEBP':
+        return FileMagicNumberType.webp;
+      case 'WAVE':
+        return FileMagicNumberType.wav;
+      case 'AVI ':
+        return FileMagicNumberType.avi;
+      default:
+        return null;
+    }
   }
 
   /// Detects the file type from a byte array using its magic number.
@@ -88,7 +122,7 @@ class FileMagicNumber {
   /// Check whether the byte sequence (representing a file signature) exists within the data stream.
   static bool _matchAt(Uint8List data, List<int> pattern, int offset) {
     for (int i = 0; i < pattern.length; i++) {
-      if (data[offset + i] != pattern[i]) {
+      if (offset + i < data.length && data[offset + i] != pattern[i]) {
         return false;
       }
     }

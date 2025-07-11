@@ -53,6 +53,12 @@ enum FileMagicNumberType {
   /// MP4 (MPEG-4 Part 14) video file format.
   mp4,
 
+  /// WebP (WebP)
+  webp,
+
+  /// AVI video file format.
+  avi,
+
   // Other formats
   /// PDF (Portable Document Format) file.
   pdf,
