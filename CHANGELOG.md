@@ -1,5 +1,5 @@
 ## 1.4.1
-* Fixed an error that confused a PDF with a JP2 image inside, with a JP2 file
+* Fixed an error that confused a PDF with a JP2 image inside, with a JP2 file [#27](https://github.com/vicajilau/file_magic_number/issues/27).
 * Added new test about pdfs with another files inside (ej: pdfs with jp2)
 
 ## 1.4.0
