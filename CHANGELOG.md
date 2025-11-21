@@ -1,3 +1,7 @@
+## 1.4.1
+* Fixed an error that confused a PDF with a JP2 image inside, with a JP2 file
+* Added new test about pdfs with another files inside (ej: pdfs with jp2)
+
 ## 1.4.0
 * Fixed an issue where JPEG files were detected as TIFF files [#17](https://github.com/vicajilau/file_magic_number/issues/17).
 * Added webp support.
