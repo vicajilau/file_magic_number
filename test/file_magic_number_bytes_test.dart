@@ -90,6 +90,21 @@ void main() {
       expect(result, FileMagicNumberType.wav);
     });
 
+    test('Detects combined files (e.g., PDF containing a JP2)', () {
+      // A PDF file can contain other file types. The detection should identify
+      // it as PDF based on the initial bytes, not the embedded content.
+      // PDF magic number: %PDF (0x25 0x50 0x44 0x46)
+      // JP2 magic number: ....jP J.. (0x00 0x00 0x00 0x0C 0x6A 0x50 0x20 0x20 0x0D 0x0A)
+      final bytes = Uint8List.fromList([
+        0x25, 0x50, 0x44, 0x46, // PDF header
+        0x2D, 0x31, 0x2E, 0x37, // PDF version
+        0x0A, 0x25, 0xC4, 0xE5, 0xF2, 0xE5, 0xEB, 0xA7, // Some more PDF data
+        0x00, 0x00, 0x00, 0x0C, 0x6A, 0x50, 0x20, 0x20, 0x0D, 0x0A // Embedded JP2 signature
+      ]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.pdf);
+    });
+
     test('Detects WebP file', () {
       // RIFF....WEBP (offset 0: "RIFF", offset 8: "WEBP")
       final bytes = Uint8List.fromList([
