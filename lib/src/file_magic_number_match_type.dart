@@ -19,10 +19,10 @@ enum FileMagicNumberMatchType {
   /// This method is used internally by the library during file type detection.
   static FileMagicNumberMatchType get(FileMagicNumberType type) {
     switch (type) {
-      case FileMagicNumberType.mp4:
-      case FileMagicNumberType.heic:
       case FileMagicNumberType.pdf:
         return offset;
+      case FileMagicNumberType.mp4:
+      case FileMagicNumberType.heic:
       case FileMagicNumberType.webp:
       case FileMagicNumberType.wav:
       case FileMagicNumberType.avi:
