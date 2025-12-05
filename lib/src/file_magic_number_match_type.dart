@@ -21,6 +21,10 @@ enum FileMagicNumberMatchType {
   static FileMagicNumberMatchType get(FileMagicNumberType type) {
     switch (type) {
       case FileMagicNumberType.pdf:
+      case FileMagicNumberType.rar:
+      case FileMagicNumberType.tar:
+      case FileMagicNumberType.zip:
+      case FileMagicNumberType.sevenZ:
         return complexFile;
       case FileMagicNumberType.mp4:
       case FileMagicNumberType.heic:

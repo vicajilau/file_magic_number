@@ -135,6 +135,36 @@ void main() {
       expect(result, FileMagicNumberType.pdf);
     });
 
+    test('Detects combined files (e.g., RAR containing a PDF)', () {
+      // A RAR file can contain other file types. The detection should identify
+      // it as RAR based on the initial bytes, not the embedded content.
+      // RAR magic number: Rar! (0x52 0x61 0x72 0x21)
+      // PDF magic number: %PDF (0x25 0x50 0x44 0x46)
+      final bytes = Uint8List.fromList([
+        0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00, // RAR header
+        0xCF, 0x90, 0x73, 0x74, 0x00, 0x00, 0x00, 0x0D, // Some more RAR data
+        0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x35, // Embedded PDF signature
+      ]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.rar);
+    });
+
+    test('Detects combined files (e.g., TAR containing a PDF)', () {
+      // A TAR file can contain other file types. The detection should identify
+      // it as TAR based on its header structure. The 'ustar' signature
+      // appears at offset 257.
+      // TAR 'ustar' signature at offset 257: 0x75 0x73 0x74 0x61 0x72
+      // PDF magic number: %PDF (0x25 0x50 0x44 0x46)
+      final bytes = Uint8List.fromList([
+        ...List.filled(257, 0x00), // Padding
+        0x75, 0x73, 0x74, 0x61, 0x72, // TAR 'ustar' signature at offset 257
+        0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x35, // Embedded PDF
+      ]);
+
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.tar);
+    });
+
     test('Detects WebP file', () {
       // RIFF....WEBP (offset 0: "RIFF", offset 8: "WEBP")
       final bytes = Uint8List.fromList([
