@@ -20,13 +20,13 @@ enum FileMagicNumberMatchType {
   static FileMagicNumberMatchType get(FileMagicNumberType type) {
     switch (type) {
       case FileMagicNumberType.pdf:
+      case FileMagicNumberType.mp4:
+      case FileMagicNumberType.heic:
         return offset;
       case FileMagicNumberType.webp:
       case FileMagicNumberType.wav:
       case FileMagicNumberType.avi:
         return byRange;
-      case FileMagicNumberType.mp4:
-      case FileMagicNumberType.heic:
       default:
         return exact;
     }
