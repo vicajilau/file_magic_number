@@ -29,11 +29,11 @@ class FileMagicNumber {
 
     for (var entry in MagicNumberList.magicNumbers.entries) {
       switch (FileMagicNumberMatchType.get(entry.value)) {
-        case FileMagicNumberMatchType.complexFile:
         case FileMagicNumberMatchType.exact:
           if (_matchAt(bytes, entry.key, 0)) {
             return entry.value;
           }
+        case FileMagicNumberMatchType.complexFile:
         case FileMagicNumberMatchType.offset:
           if (_matchesWithOffset(bytes, entry.key)) {
             return entry.value;
