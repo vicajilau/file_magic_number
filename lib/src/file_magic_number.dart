@@ -29,6 +29,9 @@ class FileMagicNumber {
 
     for (var entry in MagicNumberList.magicNumbers.entries) {
       switch (FileMagicNumberMatchType.get(entry.value)) {
+        case FileMagicNumberMatchType.complexFile:
+          final value = _findFirstMatch(bytes);
+          if (value != null) return value;
         case FileMagicNumberMatchType.exact:
           if (_matchAt(bytes, entry.key, 0)) {
             return entry.value;
@@ -66,6 +69,31 @@ class FileMagicNumber {
       default:
         return null;
     }
+  }
+
+  /// Scans the byte array to find the first match among complex file types.
+  ///
+  /// This method iterates through the byte array and checks for signatures
+  /// of file types classified as 'complex'. It returns the first match found.
+  static FileMagicNumberType? _findFirstMatch(Uint8List bytes) {
+    // Filter for complex file types first to avoid iterating over all magic numbers.
+    final complexFileEntries = MagicNumberList.magicNumbers.entries
+        .where((entry) =>
+            FileMagicNumberMatchType.get(entry.value) ==
+            FileMagicNumberMatchType.complexFile)
+        .toList();
+
+    // Iterate through the bytes and check only for complex file signatures.
+    for (int i = 0; i < bytes.length; i++) {
+      for (final entry in complexFileEntries) {
+        if (_matchAt(bytes, entry.key, i)) {
+          // Return the first match found.
+          return entry.value;
+        }
+      }
+    }
+    // If no complex file signature is found after scanning all bytes, return null.
+    return null;
   }
 
   /// Detects the file type from a byte array using its magic number.
@@ -126,6 +154,7 @@ class FileMagicNumber {
         return false;
       }
     }
+    if(offset + 1 >= data.length) return false;
     return true;
   }
 }

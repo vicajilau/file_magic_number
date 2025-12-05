@@ -1,3 +1,7 @@
+## 1.4.2
+* Fixed an issue where MP4 files were not detected. [#31](https://github.com/vicajilau/file_magic_number/issues/31).
+* Added new test about different complet file types with another files inside (ej: rar with tar)
+
 ## 1.4.1
 * Fixed an error that confused a PDF with a JP2 image inside, with a JP2 file [#27](https://github.com/vicajilau/file_magic_number/issues/27).
 * Added new test about pdfs with another files inside (ej: pdfs with jp2)
