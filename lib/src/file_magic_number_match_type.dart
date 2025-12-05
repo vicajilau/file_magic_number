@@ -6,7 +6,7 @@ import '../file_magic_number.dart';
 /// should be matched exactly at the beginning of the file (`exact`)
 /// or if it can appear at any position within a predefined range (`offset`).
 enum FileMagicNumberMatchType {
-  complex_file,
+  complexFile,
   exact,
   offset,
   byRange;
@@ -21,7 +21,7 @@ enum FileMagicNumberMatchType {
   static FileMagicNumberMatchType get(FileMagicNumberType type) {
     switch (type) {
       case FileMagicNumberType.pdf:
-        return complex_file;
+        return complexFile;
       case FileMagicNumberType.mp4:
       case FileMagicNumberType.heic:
         return offset;
