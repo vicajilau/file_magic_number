@@ -29,6 +29,8 @@ class FileMagicNumber {
 
     for (var entry in MagicNumberList.magicNumbers.entries) {
       switch (FileMagicNumberMatchType.get(entry.value)) {
+        case FileMagicNumberMatchType.complex_file:
+          return FileMagicNumberType.pdf;
         case FileMagicNumberMatchType.exact:
           if (_matchAt(bytes, entry.key, 0)) {
             return entry.value;
