@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   web: ^1.1.0
-  mime: ^1.0.4
+  mime: ">=1.0.4 <3.0.0"
   cross_file: ^0.3.4+2
 
 dev_dependencies:
