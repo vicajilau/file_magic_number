@@ -11,13 +11,13 @@ dependencies:
   flutter:
     sdk: flutter
   web: ^1.1.0
-  mime: ">=1.0.4 <3.0.0"
+  mime: ^2.0.0
   cross_file: ^0.3.4+2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ">=5.0.0 <7.0.0"
   test: ^1.25.15
 
 # For information on the generic Dart part of this file, see the
