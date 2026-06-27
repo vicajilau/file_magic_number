@@ -1,3 +1,9 @@
+## 2.0.0
+* **Breaking change**: Added new file types to `FileMagicNumberType` enum (`docx`, `xlsx`, `pptx`, `html`, `json`, `xml`, `csv`, `svg`, `txt`, `rtf`, `epub`). Since enums are exhaustively matched in Dart 3, switch statements over this enum must handle the new types or define a `default` case.
+* **Refactor & Internal Rewrite**: Replaced custom parser logic and custom reader classes with a pure, cross-platform integration based on the standard `mime` package (`MimeTypeResolver` and `lookupMimeType`) and `cross_file` (`XFile`).
+* **Bug Fixes**: Fixed false positive issues where JPG or other files containing random byte sequences could match the offset-based signatures of MP4/HEIC.
+* **Empty File Detection**: Empty files are now instantly detected as `FileMagicNumberType.emptyFile` regardless of their path extension.
+
 ## 1.4.2
 * Fixed an issue where MP4 files were not detected. [#31](https://github.com/vicajilau/file_magic_number/issues/31).
 * Added new test about different complet file types with another files inside (ej: rar with tar)

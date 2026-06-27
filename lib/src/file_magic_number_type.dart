@@ -73,5 +73,41 @@ enum FileMagicNumberType {
   tar,
 
   /// SQLite database file format.
-  sqlite;
+  sqlite,
+
+  // Office documents
+  /// Microsoft Word Document.
+  docx,
+
+  /// Microsoft Excel Spreadsheet.
+  xlsx,
+
+  /// Microsoft PowerPoint Presentation.
+  pptx,
+
+  // Web / Data formats
+  /// HTML document.
+  html,
+
+  /// JSON data file.
+  json,
+
+  /// XML document.
+  xml,
+
+  /// CSV text file.
+  csv,
+
+  // Other common formats
+  /// SVG vector image.
+  svg,
+
+  /// Plain text file.
+  txt,
+
+  /// Rich Text Format file.
+  rtf,
+
+  /// EPUB eBook format.
+  epub;
 }

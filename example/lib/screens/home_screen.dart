@@ -265,6 +265,29 @@ class _HomeScreenState extends State<HomeScreen> {
         fileIcon = Icons.settings_applications;
         iconColor = Colors.grey.shade800;
         break;
+      case FileMagicNumberType.docx:
+      case FileMagicNumberType.xlsx:
+      case FileMagicNumberType.pptx:
+        fileIcon = Icons.description;
+        iconColor = Colors.teal.shade800;
+        break;
+      case FileMagicNumberType.html:
+      case FileMagicNumberType.json:
+      case FileMagicNumberType.xml:
+      case FileMagicNumberType.csv:
+      case FileMagicNumberType.txt:
+      case FileMagicNumberType.rtf:
+        fileIcon = Icons.text_snippet;
+        iconColor = Colors.orange.shade700;
+        break;
+      case FileMagicNumberType.svg:
+        fileIcon = Icons.image;
+        iconColor = Colors.blue.shade700;
+        break;
+      case FileMagicNumberType.epub:
+        fileIcon = Icons.book;
+        iconColor = Colors.brown.shade700;
+        break;
       case FileMagicNumberType.unknown:
       case FileMagicNumberType.emptyFile:
         fileIcon = Icons.insert_drive_file;

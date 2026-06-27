@@ -20,14 +20,16 @@
   </a>
 </p>
 
-A Flutter package to detect file types based on their magic number instead of relying on MIME types. Works on Flutter for mobile, desktop, and web without requiring native code.
+A Flutter package to detect file types based on their content headers (magic numbers) and extensions. Powered by a standard MIME type resolver under the hood, it provides robust, lightweight detection on Flutter for mobile, desktop, and web without requiring native code.
 
 ## 🚀 Features
-- Detects file types using their magic number (signature bytes)
-- Get bytes `Uint8List` from path or blob. 
+- Detects file types using content headers (magic numbers) and file extensions
+- Powered by `MimeTypeResolver` for robust, standard MIME detection
+- Support for custom extension registration and custom byte signature overrides
+- Reads files cross-platform using `XFile` (`cross_file`)
 - Supports Flutter on Android, iOS, macOS, Windows, Linux, and Web
-- No need for native plugins
-- Lightweight and easy to extend with custom signatures
+- No native code dependencies
+- Easy to extend with custom signatures
 
 ## 📌 Installation
 Add the dependency to your `pubspec.yaml`:
@@ -146,26 +148,37 @@ void main() async {
 ```
 
 ## 🎯 Supported File Types
-| File Type | Magic Number (Hex)        |
-|-----------|---------------------------|
-| ZIP       | 50 4B 03 04               |
-| RAR       | 52 61 72 21 1A 07 00      |
-| RAR       | 52 61 72 21 1A 07         |
-| 7Z        | 37 7A BC AF 27 1C         |
-| PDF       | 25 50 44 46               |
-| PNG       | 89 50 4E 47 0D 0A 1A 0A   |
-| JPG       | FF D8 FF                  |
-| GIF       | 47 49 46 38               |
-| HEIC      | 66 74 79 70 68 65 69 63   |
-| TIFF      | 49 49 2A 00 / 4D 4D 00 2A |
-| BMP       | 42 4D                     |
-| MP3       | 49 44 33                  |
-| WAV       | 52 49 46 46               |
-| MP4       | 66 74 79 70               |
-| ELF       | 7F 45 4C 46               |
-| EXE       | 4D 5A                     |
-| TAR       | 75 73 74 61 72            |
-| SQLite    | 53 51 4C 69 74 65         |
+| File Type | Magic Number (Hex) / Details |
+|-----------|------------------------------|
+| ZIP       | 50 4B 03 04                  |
+| RAR       | 52 61 72 21 1A 07 00         |
+| RAR       | 52 61 72 21 1A 07            |
+| 7Z        | 37 7A BC AF 27 1C            |
+| PDF       | 25 50 44 46                  |
+| PNG       | 89 50 4E 47 0D 0A 1A 0A      |
+| JPG       | FF D8 FF                     |
+| GIF       | 47 49 46 38                  |
+| HEIC      | 66 74 79 70 68 65 69 63      |
+| TIFF      | 49 49 2A 00 / 4D 4D 00 2A    |
+| BMP       | 42 4D                        |
+| MP3       | 49 44 33                     |
+| WAV       | 52 49 46 46                  |
+| MP4       | 66 74 79 70                  |
+| ELF       | 7F 45 4C 46                  |
+| EXE       | 4D 5A                        |
+| TAR       | 75 73 74 61 72               |
+| SQLite    | 53 51 4C 69 74 65            |
+| DOCX      | 50 4B 03 04 (Zip Container)  |
+| XLSX      | 50 4B 03 04 (Zip Container)  |
+| PPTX      | 50 4B 03 04 (Zip Container)  |
+| HTML      | 3C 21 44 4F / 3C 68 74 6D    |
+| JSON      | 7B                           |
+| XML       | 3C 3F 78 6D                  |
+| CSV       | Comma-separated values       |
+| SVG       | 3C 73 76 67 (XML-based)      |
+| TXT       | Plain text                   |
+| RTF       | 7B 5C 72 74                  |
+| EPUB      | 50 4B 03 04 (Zip Container)  |
 
 ## 📌 Contributing
 Feel free to contribute by adding more file signatures or improving the implementation. Fork the repo and submit a PR!
