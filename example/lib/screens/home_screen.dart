@@ -21,12 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _error;
 
   void _loadFileManually() async {
-    FilePickerResult? result = await FilePicker.pickFiles(
-      withData: true,
-      type: FileType.any,
-    );
+    FilePickerResult? result = await FilePicker.pickFiles(type: FileType.any);
     if (result != null) {
-      final bytes = result.files.single.bytes;
+      final bytes = await result.files.single.readAsBytes();
       final path = result.files.single.path;
       if (path != null) {
         await _loadPathType(bytes, path);
