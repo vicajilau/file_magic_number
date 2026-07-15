@@ -220,6 +220,64 @@ void main() {
       await testFile.delete();
     });
 
+    test('Detects Gzip file from path', () async {
+      final testFile = File('test.gz');
+      await testFile.writeToFile([0x1F, 0x8B]);
+      final result = await FileMagicNumber.detectFileTypeFromPathOrBlob(
+        testFile.path,
+      );
+      expect(result, FileMagicNumberType.gzip);
+      await testFile.delete();
+    });
+
+    test('Detects Ogg file from path', () async {
+      final testFile = File('test.ogg');
+      await testFile.writeToFile([0x4F, 0x67, 0x67, 0x53]);
+      final result = await FileMagicNumber.detectFileTypeFromPathOrBlob(
+        testFile.path,
+      );
+      expect(result, FileMagicNumberType.ogg);
+      await testFile.delete();
+    });
+
+    test('Detects FLAC file from path', () async {
+      final testFile = File('test.flac');
+      await testFile.writeToFile([0x66, 0x4C, 0x61, 0x43]);
+      final result = await FileMagicNumber.detectFileTypeFromPathOrBlob(
+        testFile.path,
+      );
+      expect(result, FileMagicNumberType.flac);
+      await testFile.delete();
+    });
+
+    test('Detects custom registered type from path', () async {
+      FileMagicNumber.registerCustomType(
+        extension: 'custom2',
+        mimeType: 'application/x-custom2',
+        magicNumber: [0xDD, 0xEE, 0xFF],
+        type: FileMagicNumberType.zip,
+      );
+      final testFile = File('test.custom2');
+      await testFile.writeToFile([0xDD, 0xEE, 0xFF]);
+      final result = await FileMagicNumber.detectFileTypeFromPathOrBlob(
+        testFile.path,
+      );
+      expect(result, FileMagicNumberType.zip);
+      await testFile.delete();
+    });
+
+    test('Detects PDF file from path with size > 512 bytes', () async {
+      final testFile = File('large_test.pdf');
+      final header = [0x25, 0x50, 0x44, 0x46];
+      final fullBytes = [...header, ...List.filled(1000, 0)];
+      await testFile.writeToFile(fullBytes);
+      final result = await FileMagicNumber.detectFileTypeFromPathOrBlob(
+        testFile.path,
+      );
+      expect(result, FileMagicNumberType.pdf);
+      await testFile.delete();
+    });
+
     test(
       'detectFileTypeFromPathOrBlob should throw exception for nonexistent file',
       () async {

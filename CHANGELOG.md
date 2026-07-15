@@ -1,3 +1,9 @@
+## 2.1.0
+* **Performance Optimization**: Optimized `detectFileTypeFromPathOrBlob` to read only the first chunk of bytes (up to 512 bytes) using stream reading. This prevents high memory usage (OOM errors) and significantly improves detection speeds for large files.
+* **New Formats**: Added support for Gzip (`.gz`), Ogg (`.ogg` / `.ogv`), and FLAC (`.flac`) file detection.
+* **Dynamic Custom Types**: Added `FileMagicNumber.registerCustomType` to allow clients to dynamically register custom extensions, MIME types, and magic numbers from their code.
+* **Internal Cleanup**: Utilized and integrated stream reading extensions safely across platforms.
+
 ## 2.0.0
 * **Breaking change**: Added new file types to `FileMagicNumberType` enum (`docx`, `xlsx`, `pptx`, `html`, `json`, `xml`, `csv`, `svg`, `txt`, `rtf`, `epub`). Since enums are exhaustively matched in Dart 3, switch statements over this enum must handle the new types or define a `default` case.
 * **Refactor & Internal Rewrite**: Replaced custom parser logic and custom reader classes with a pure, cross-platform integration based on the standard `mime` package (`MimeTypeResolver` and `lookupMimeType`) and `cross_file` (`XFile`).

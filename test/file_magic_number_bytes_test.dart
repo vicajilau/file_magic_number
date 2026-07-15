@@ -318,5 +318,35 @@ void main() {
       final result = FileMagicNumber.detectFileTypeFromBytes(null);
       expect(result, FileMagicNumberType.emptyFile);
     });
+
+    test('Detects Gzip file', () {
+      final bytes = Uint8List.fromList([0x1F, 0x8B]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.gzip);
+    });
+
+    test('Detects Ogg file', () {
+      final bytes = Uint8List.fromList([0x4F, 0x67, 0x67, 0x53]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.ogg);
+    });
+
+    test('Detects FLAC file', () {
+      final bytes = Uint8List.fromList([0x66, 0x4C, 0x61, 0x43]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.flac);
+    });
+
+    test('Detects custom registered type', () {
+      FileMagicNumber.registerCustomType(
+        extension: 'custom',
+        mimeType: 'application/x-custom',
+        magicNumber: [0xAA, 0xBB, 0xCC],
+        type: FileMagicNumberType.pdf,
+      );
+      final bytes = Uint8List.fromList([0xAA, 0xBB, 0xCC]);
+      final result = FileMagicNumber.detectFileTypeFromBytes(bytes);
+      expect(result, FileMagicNumberType.pdf);
+    });
   });
 }

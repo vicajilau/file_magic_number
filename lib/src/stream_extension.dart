@@ -9,8 +9,8 @@ extension StreamUtils<T> on Stream<T> {
   Future<T?> firstOrNull() async {
     try {
       return await first;
-    } catch (_) {
-      return null; // Returns null instead of throwing an exception
+    } on StateError {
+      return null; // Returns null instead of throwing an exception for empty streams
     }
   }
 }
