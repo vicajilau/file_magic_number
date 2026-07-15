@@ -243,11 +243,14 @@ class _HomeScreenState extends State<HomeScreen> {
       case FileMagicNumberType.rar:
       case FileMagicNumberType.sevenZ:
       case FileMagicNumberType.tar:
+      case FileMagicNumberType.gzip:
         fileIcon = Icons.archive;
         iconColor = Colors.amber.shade800;
         break;
       case FileMagicNumberType.mp3:
       case FileMagicNumberType.wav:
+      case FileMagicNumberType.ogg:
+      case FileMagicNumberType.flac:
         fileIcon = Icons.audiotrack;
         iconColor = Colors.purple.shade700;
         break;
