@@ -147,6 +147,21 @@ void main() async {
 }
 ```
 
+### Dynamically register custom file types
+You can dynamically register custom file signatures, extensions, and MIME-to-type mappings at runtime:
+```dart
+import 'package:file_magic_number/file_magic_number.dart';
+
+void main() {
+  FileMagicNumber.registerCustomType(
+    extension: 'custom',
+    mimeType: 'application/x-custom',
+    magicNumber: [0xAA, 0xBB, 0xCC],
+    type: FileMagicNumberType.zip, // Optional: maps to an existing enum category
+  );
+}
+```
+
 ## 🎯 Supported File Types
 | File Type | Magic Number (Hex) / Details |
 |-----------|------------------------------|
@@ -154,6 +169,7 @@ void main() async {
 | RAR       | 52 61 72 21 1A 07 00         |
 | RAR       | 52 61 72 21 1A 07            |
 | 7Z        | 37 7A BC AF 27 1C            |
+| GZIP      | 1F 8B                        |
 | PDF       | 25 50 44 46                  |
 | PNG       | 89 50 4E 47 0D 0A 1A 0A      |
 | JPG       | FF D8 FF                     |
@@ -163,6 +179,8 @@ void main() async {
 | BMP       | 42 4D                        |
 | MP3       | 49 44 33                     |
 | WAV       | 52 49 46 46                  |
+| OGG       | 4F 67 67 53                  |
+| FLAC      | 66 4C 61 43                  |
 | MP4       | 66 74 79 70                  |
 | ELF       | 7F 45 4C 46                  |
 | EXE       | 4D 5A                        |

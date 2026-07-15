@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:cross_file/cross_file.dart';
 import 'package:mime/mime.dart';
 import 'file_magic_number_type.dart';
+import 'stream_extension.dart';
 
 /// A utility class for detecting file types based on their content and extension.
 class FileMagicNumber {
@@ -10,6 +11,9 @@ class FileMagicNumber {
     ..addExtension('elf', 'application/x-elf')
     ..addExtension('sqlite', 'application/x-sqlite3')
     ..addExtension('tar', 'application/x-tar')
+    ..addExtension('gz', 'application/gzip')
+    ..addExtension('ogg', 'audio/ogg')
+    ..addExtension('flac', 'audio/flac')
 
     // Register custom magic numbers (byte signatures)
     ..addMagicNumber([0x7F, 0x45, 0x4C, 0x46], 'application/x-elf')
@@ -28,7 +32,12 @@ class FileMagicNumber {
     ..addMagicNumber(
         [0x52, 0x49, 0x46, 0x46, 0, 0, 0, 0, 0x41, 0x56, 0x49, 0x20],
         'video/x-msvideo',
-        mask: [0xFF, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF]);
+        mask: [0xFF, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF])
+    ..addMagicNumber([0x1F, 0x8B], 'application/gzip')
+    ..addMagicNumber([0x4F, 0x67, 0x67, 0x53], 'audio/ogg')
+    ..addMagicNumber([0x66, 0x4C, 0x61, 0x43], 'audio/flac');
+
+  static final Map<String, FileMagicNumberType> _customMimeMappings = {};
 
   /// Detects the file type from a byte array.
   ///
@@ -61,7 +70,18 @@ class FileMagicNumber {
   static Future<FileMagicNumberType> detectFileTypeFromPathOrBlob(
     String pathOrBlob,
   ) async {
-    final bytes = await getBytesFromPathOrBlob(pathOrBlob);
+    final file = XFile(pathOrBlob);
+    Uint8List bytes;
+    try {
+      final magicMaxLength = _resolver.magicNumbersMaxLength;
+      final readLength = magicMaxLength > 512 ? magicMaxLength : 512;
+      final stream = file.openRead(0, readLength);
+      final chunk = await stream.firstOrNull();
+      bytes = chunk ?? Uint8List(0);
+    } catch (_) {
+      rethrow;
+    }
+
     if (bytes.isEmpty) {
       return FileMagicNumberType.emptyFile;
     }
@@ -73,6 +93,25 @@ class FileMagicNumber {
     }
 
     return detectFileTypeFromBytes(bytes);
+  }
+
+  /// Registers a custom file type dynamic signature.
+  ///
+  /// - [extension]: The file extension (e.g., 'custom').
+  /// - [mimeType]: The MIME type of the file (e.g., 'application/x-custom').
+  /// - [magicNumber]: The magic byte signature of the file.
+  /// - [type]: The mapped [FileMagicNumberType] (default: [FileMagicNumberType.unknown]).
+  static void registerCustomType({
+    required String extension,
+    required String mimeType,
+    required List<int> magicNumber,
+    FileMagicNumberType type = FileMagicNumberType.unknown,
+  }) {
+    _resolver.addExtension(extension, mimeType);
+    _resolver.addMagicNumber(magicNumber, mimeType);
+    if (type != FileMagicNumberType.unknown) {
+      _customMimeMappings[mimeType] = type;
+    }
   }
 
   static bool _matchAt(Uint8List data, List<int> pattern, int offset) {
@@ -103,7 +142,22 @@ class FileMagicNumber {
       return FileMagicNumberType.unknown;
     }
 
+    final customMapping = _customMimeMappings[mime];
+    if (customMapping != null) {
+      return customMapping;
+    }
+
     switch (mime) {
+      case 'application/gzip':
+      case 'application/x-gzip':
+        return FileMagicNumberType.gzip;
+      case 'audio/ogg':
+      case 'video/ogg':
+      case 'application/ogg':
+        return FileMagicNumberType.ogg;
+      case 'audio/flac':
+      case 'audio/x-flac':
+        return FileMagicNumberType.flac;
       case 'application/pdf':
         return FileMagicNumberType.pdf;
       case 'application/zip':

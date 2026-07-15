@@ -109,5 +109,14 @@ enum FileMagicNumberType {
   rtf,
 
   /// EPUB eBook format.
-  epub;
+  epub,
+
+  /// Gzip compressed file format.
+  gzip,
+
+  /// Ogg multimedia container format.
+  ogg,
+
+  /// FLAC lossless audio format.
+  flac;
 }
