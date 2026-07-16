@@ -1,4 +1,5 @@
 ## 2.1.0
+* **Dependency Upgrade**: Upgraded `mime` dependency to version `^2.0.0`, resolving version resolution conflicts with Firebase packages and `pdf_combiner`.
 * **Performance Optimization**: Optimized `detectFileTypeFromPathOrBlob` to read only the first chunk of bytes (up to 512 bytes) using stream reading. This prevents high memory usage (OOM errors) and significantly improves detection speeds for large files.
 * **New Formats**: Added support for Gzip (`.gz`), Ogg (`.ogg` / `.ogv`), and FLAC (`.flac`) file detection.
 * **Dynamic Custom Types**: Added `FileMagicNumber.registerCustomType` to allow clients to dynamically register custom extensions, MIME types, and magic numbers from their code.
